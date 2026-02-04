@@ -12,6 +12,12 @@
 ## Entries
 ### 2026-02-05
 - Changes:
+  - Adapter scan button now enables when signal is present (warns if no lock).
+  - Updated UI build stamp to 20260205i.
+- Tests:
+  - Not run (UI-only).
+### 2026-02-05
+- Changes:
   - Reduced polling load: sessions/logs/access/adapters/buffers/splitters now poll only when their view is open.
   - Updated UI build stamp to 20260205h.
 - Tests:
