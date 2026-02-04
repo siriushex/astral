@@ -10,6 +10,12 @@
     - Itemized list of tests (or "Not run")
 
 ## Entries
+### 2026-02-05
+- Changes:
+  - Added `-pass` option to reset admin password to default (admin/admin).
+  - Updated Help page and UI build stamp to 20260205a.
+- Tests:
+  - Not run (deploy-only).
 ### 2026-02-04
 - Changes:
   - Fixed embedded launcher to treat JSON configs as server configs and skip the script arg in option parsing.
