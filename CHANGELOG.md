@@ -12,6 +12,12 @@
 ## Entries
 ### 2026-02-04
 - Changes:
+  - Added ffmpeg/ffprobe path resolver with settings/env/bundle defaults.
+  - Added `/api/v1/tools` and startup log for resolved tools/edition.
+- Tests:
+  - Not run (core change).
+### 2026-02-04
+- Changes:
   - Added Softcam settings UI (list + modal) backed by settings.
   - Added CAS/License section notes that they are not wired yet.
   - Updated `SKILL.md` to reflect the new UI state.
