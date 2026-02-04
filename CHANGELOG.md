@@ -12,6 +12,11 @@
 ## Entries
 ### 2026-02-04
 - Changes:
+  - Sessions list now drops stale HTTP clients to keep only active sessions.
+- Tests:
+  - Not run (runtime change).
+### 2026-02-04
+- Changes:
   - Stream apply now uses targeted runtime update instead of full reload.
 - Tests:
   - Not run (runtime change).
