@@ -13,7 +13,8 @@
 ### 2026-02-05
 - Changes:
   - Added `-pass` option to reset admin password to default (admin/admin).
-  - Updated Help page and UI build stamp to 20260205a.
+  - Reset now bypasses password policy via a force-set path.
+  - Updated Help page and UI build stamp to 20260205b.
 - Tests:
   - Not run (deploy-only).
 ### 2026-02-04
