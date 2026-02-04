@@ -13,7 +13,7 @@
 ### 2026-02-04
 - Changes:
   - Added Softcam settings UI (list + modal) backed by settings.
-  - Added CAS section note that it is not wired yet.
+  - Added CAS/License section notes that they are not wired yet.
 - Tests:
   - Not run (UI change).
 ### 2026-02-04
