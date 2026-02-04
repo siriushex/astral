@@ -12,6 +12,12 @@
 ## Entries
 ### 2026-02-05
 - Changes:
+  - HTTP auth allow/deny lists now support CIDR ranges.
+  - Updated Help text for CIDR support and bumped UI build to 20260205f.
+- Tests:
+  - Not run (docs/runtime).
+### 2026-02-05
+- Changes:
   - Collapsed General settings with an “Show advanced settings” toggle.
   - Sessions list now filters inactive/ended entries in the UI.
   - Updated UI build stamp to 20260205e.
