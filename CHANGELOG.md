@@ -12,7 +12,7 @@
 ## Entries
 ### 2026-02-04
 - Changes:
-  - Added minimal GitHub Actions CI (build + smoke + telegram unit).
+  - Added `.github/workflows/ci.yml` for build + smoke + telegram unit.
 - Tests:
   - Not run (CI only).
 ### 2026-02-04
