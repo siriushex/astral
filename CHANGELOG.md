@@ -15,7 +15,8 @@
   - Added `-pass` option to reset admin password to default (admin/admin).
   - Reset now bypasses password policy via a force-set path.
   - Added dashboard notice for scan add feedback.
-  - Updated Help page and UI build stamp to 20260205c.
+  - Defaulted view mode to Cards with Compact tiles on first load.
+  - Updated Help page and UI build stamp to 20260205d.
 - Tests:
   - Not run (deploy-only).
 ### 2026-02-04
