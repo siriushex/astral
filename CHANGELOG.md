@@ -12,6 +12,12 @@
 ## Entries
 ### 2026-02-05
 - Changes:
+  - Stream status polling now runs only when Dashboard is open.
+  - Updated UI build stamp to 20260205j.
+- Tests:
+  - Not run (UI-only).
+### 2026-02-05
+- Changes:
   - Adapter scan button now enables when signal is present (warns if no lock).
   - Updated UI build stamp to 20260205i.
 - Tests:
