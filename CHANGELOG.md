@@ -12,6 +12,11 @@
 ## Entries
 ### 2026-02-05
 - Changes:
+  - Added default favicon to stop /favicon.ico warnings in http_server logs.
+- Tests:
+  - Not run (static asset).
+### 2026-02-05
+- Changes:
   - Improved scan feedback by keeping dashboard notices stable (no premature clear).
   - Extended scan success notice duration; updated UI build stamp to 20260205o.
 - Tests:
