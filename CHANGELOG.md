@@ -12,6 +12,13 @@
 ## Entries
 ### 2026-02-04
 - Changes:
+  - Default data directory now uses /etc/astral/<config>.data unless overridden by ASTRA_DATA_ROOT.
+  - Added astral symlink alongside astra binary for simplified запуск.
+  - Added ASTRA_WEB_DIR/ASTRAL_WEB_DIR override for UI path.
+- Tests:
+  - Not run (startup defaults).
+### 2026-02-04
+- Changes:
   - Stream editor General tab layout compacted (Name/ID/Type inline, smaller Description).
 - Tests:
   - Not run (UI change).
