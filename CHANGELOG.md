@@ -12,6 +12,11 @@
 ## Entries
 ### 2026-02-04
 - Changes:
+  - Added SoftCAM id dropdown in Input settings populated from configured SoftCAMs.
+- Tests:
+  - Not run (UI change).
+### 2026-02-04
+- Changes:
   - Added `/api/v1/dvb-adapters` and UI selection of detected DVB devices with busy/free status.
   - Adapter cards show hardware availability badges when dvbls is available.
 - Tests:
