@@ -12,6 +12,11 @@
 ## Entries
 ### 2026-02-04
 - Changes:
+  - Added Groups settings UI with stream group assignment and playlist group-title mapping.
+- Tests:
+  - Not run (UI + server change).
+### 2026-02-04
+- Changes:
   - Added Telegram alerts notifier with dedupe/throttling, stream/input events, and config reload alerts.
   - Added Telegram settings UI (enable, level, token/chat ID) with test endpoint and masking in settings API.
   - Added Telegram unit tests and mock server helper.
