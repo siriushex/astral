@@ -39,6 +39,12 @@
   - Not run (CI/docs only).
 ### 2026-02-04
 - Changes:
+  - Set CODEOWNERS to a single owner (`@siriushex`) and simplified CODEOWNERS check.
+  - Updated workflow doc to reflect single-owner approval policy.
+- Tests:
+  - Not run (docs/CI only).
+### 2026-02-04
+- Changes:
   - Added CODEOWNERS ownership map and CI guard for required ownership entries.
   - Added strict team workflow documentation and PR template.
 - Tests:
