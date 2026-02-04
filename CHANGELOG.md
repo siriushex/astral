@@ -12,6 +12,11 @@
 ## Entries
 ### 2026-02-04
 - Changes:
+  - Fixed HTTP play streaming response to return valid HTTP 200 status headers.
+- Tests:
+  - Not run (server change).
+### 2026-02-04
+- Changes:
   - Added config history deletion controls (per revision + delete all).
 - Tests:
   - Not run (UI + API change).
