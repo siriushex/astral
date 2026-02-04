@@ -12,6 +12,11 @@
 ## Entries
 ### 2026-02-04
 - Changes:
+  - Enforced HTTP auth allow/deny IP lists for stream access even when auth is disabled.
+- Tests:
+  - Not run (auth change).
+### 2026-02-04
+- Changes:
   - Guarded HTTP play client cleanup to avoid nil index crash on disconnect.
 - Tests:
   - Not run (server change).
