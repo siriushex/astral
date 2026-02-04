@@ -12,6 +12,11 @@
 ## Entries
 ### 2026-02-04
 - Changes:
+  - Added access log visible count and limit clamp.
+- Tests:
+  - Not run (UI change).
+### 2026-02-04
+- Changes:
   - Added log limit selector and visible count in Logs view.
 - Tests:
   - Not run (UI change).

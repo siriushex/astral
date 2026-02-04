@@ -12,7 +12,7 @@
 ## 1-2 Months (Productization)
 | Task | Goal | Acceptance Criteria | Risk | Code Areas |
 | --- | --- | --- | --- | --- |
-| Sessions/Logs UX polish (PARTIAL) | Faster ops visibility | Added log pause/resume + limit + count; more UX polish pending | Medium | web/ |
+| Sessions/Logs UX polish (PARTIAL) | Faster ops visibility | Added log pause/resume + limit + count; access log limit + count | Medium | web/ |
 | HLS failover resilience | No broken segments during input switch | HLS smoke shows continuous playback | High | modules/hls, scripts/stream.lua |
 | Config history UX (PARTIAL) | Safer reloads | Added error detail modal + copy; more sorting/paging TBD | Medium | scripts/api.lua, web/ |
 | Monitoring exports | Operator integration | Prometheus/Influx or webhook parity documented | Medium | scripts/runtime.lua |
