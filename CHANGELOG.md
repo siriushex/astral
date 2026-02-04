@@ -12,6 +12,12 @@
 ## Entries
 ### 2026-02-04
 - Changes:
+  - Added `/api/v1/dvb-adapters` and UI selection of detected DVB devices with busy/free status.
+  - Adapter cards show hardware availability badges when dvbls is available.
+- Tests:
+  - Not run (API + UI changes).
+### 2026-02-04
+- Changes:
   - Added Astral watchdog templates + installer for CPU/RAM monitoring.
   - Documented watchdog installation and configuration in `docs/OPERATIONS.md`.
 - Tests:
