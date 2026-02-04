@@ -6,8 +6,9 @@ Build a Linux-first (Ubuntu) streaming platform based on this codebase that matc
 ## Source of truth
 - Parity matrix: `docs/PARITY.md`
 - Roadmap: `docs/ROADMAP.md`
+- If there is a mismatch, update `docs/PARITY.md` first, then sync this plan in the same change.
 
-## Feature Map (from Cesbo docs)
+## Feature Map (Cesbo reference; target parity)
 ### Adapter Configuration
 - Adapter id for dvb:// references, adapter index, FE device.
 - DVB standards: S, S2, T, T2, C, C/AC, C/B, C/A, C/C, ATSC, ASI.
@@ -39,7 +40,6 @@ Build a Linux-first (Ubuntu) streaming platform based on this codebase that matc
 
 ### Outputs and Delivery
 - Output types per spec: UDP, RTP, HTTP MPEG-TS, HLS, SRT, NetworkPush (HTTP push), MPEG-TS Files.
-- Modulator outputs: RESI (DVB-C), TBS (DVB-C), HiDes (DVB-T).
 - UDP/RTP address format: udp://[iface@]addr[:port][#options]. Options include socket_size, sync, cbr, ttl.
 - HTTP/HLS output: HLS playlist and segments, optional HTTP MPEG-TS.
 - NetworkPush: HTTP push to remote host.
@@ -69,73 +69,59 @@ Build a Linux-first (Ubuntu) streaming platform based on this codebase that matc
 - Systemd service management, license handling, backup/import/export.
 - CLI tools (astra-cli, dvbls, mpeg-ts analyzer, etc.).
 
-## Out of Scope for This Plan (per request)
-- DVB virtual adapters (SAT>IP/CI/MPTS-scan), FE device, bbframe, modulators.
+## Out of Scope (for this plan)
+- DVB virtual adapters (SAT>IP/CI/MPTS-scan), FE device, bbframe, modulators (RESI/TBS/HiDes).
 - MPTS constructor features, EPG/NIT/SDT tooling, remux_eit, SCTE-35 for HLS.
+- Grafana/Zabbix exports.
 
-## Development Plan (detailed, HLS + UI first)
-### Phase 0 - Parity audit + docs (in progress)
-- Maintain `docs/PARITY.md` (Docs → Astral matrix).
-- Keep `SKILL.md`/`PLAN.md` in sync with implemented features.
+## Development Plan (roadmap-aligned)
+### 0-2 Weeks (Stabilization)
+- [DONE] Docs + CI baseline.
+- [DONE] Settings UI parity audit (Softcam/CAS/License reflect real behavior).
+- [DONE] Backup default deviation documented.
+- [DONE] Smoke coverage refresh (`contrib/ci/smoke.sh` updated).
+- [DONE] PLAN sync with `docs/PARITY.md`/`docs/ROADMAP.md`.
 
-### Phase 1 - Baseline Service + Config API (done)
-- SQLite-backed config, users, sessions, settings.
-- REST API for streams/adapters/settings/auth.
-- Runtime apply/refresh of streams.
+Definition of Done:
+- `docs/PARITY.md` and `PLAN.md` are synced (same change set).
+- CAS/License sections are functional, no placeholders.
+- CI smoke covers the public endpoints impacted by these changes.
 
-### Phase 2 - Web UI Skeleton (done)
-- Astra-like layout (Dashboard, Sessions, Settings, Log, Help).
-- Stream editor modal with tabs, inputs/outputs list.
-- Output modal and UI styling to match Cesbo.
-- Groups settings + stream group assignment: done.
-- Servers settings + test endpoint: done.
+Gates/Tests:
+- CI: `contrib/ci/smoke.sh`.
+- CI: `./astra scripts/tests/telegram_unit.lua`.
+- Server smoke checklist in `AGENT.md` for any runtime/C changes.
 
-### Phase 3 - Live Metrics + Analyze (done, pending server verification)
-- Persist analyze stats per input (bitrate, CC/PES errors, on_air).
-- API: stream-status list/single.
-- UI: polling, tile updates, analyze modal with real stats.
+### 1-2 Months (Productization)
+- [PARTIAL] Sessions/Logs UX polish (filters + perf).
+- [TODO] HLS failover resilience (no broken segments during input switch).
+- [PARTIAL] Config history UX (revision list + meaningful error text).
+- [DONE] Monitoring exports (Influx/Webhook documented and wired).
+- [TODO] HTTP Play TLS support.
+- [TODO] MPTS runtime apply (UI/API done, runtime pending).
 
-### Phase 4 - Output Config Parity (in progress)
-- Output modal advanced fields (HLS naming/round/ts, SCTP toggles, NP buffer fill, SRT bridge advanced, BISS key): done.
-- Align output parameters with Cesbo spec for UDP/RTP (socket_size, sync, cbr, ttl, iface).
-- HLS output options: base_url, playlist, prefix, window, cleanup, wall clock.
-- HTTP MPEG-TS output options: host/port/path, buffer, keep_active.
-- NetworkPush + File outputs parity.
+Definition of Done:
+- Sessions/logs filters are responsive with large datasets.
+- HLS failover smoke shows continuous playback.
+- Config history displays errors and supports restore.
+- TLS works without breaking `http_play_no_tls` behavior.
+- MPTS runtime apply is wired and covered by parity/tests.
 
-### Phase 5 - HLS System Settings + HTTP Play (done)
-- Settings pages wired to runtime config.
-- HLS segmenter system settings: duration, quantity, naming, resource path, headers.
-- HTTP Play: global HLS/HTTP enable, playlist settings, logos, M3U header.
-- TODO: implement TLS support for HTTP Play; `http_play_no_tls` currently forces
-  playlist/stream URLs to use `http://`.
+Gates/Tests:
+- CI smoke + telegram unit.
+- Server HLS + HTTP Play smoke (`AGENT.md`).
+- Failover smoke (`fixtures/failover.json`).
 
-### Phase 5.1 - General Settings Enhancements (done)
-- Stream defaults in General (timeouts/backup/keep-active).
+### 3-6 Months (Differentiators)
+- [TODO] Advanced analytics (alert enrichment, rate-limited notifications).
+- [TODO] Extended output types (SRT/RTSP I/O, validation + UI).
+- [TODO] Ops automation (installer + systemd defaults + packaging).
 
-### Phase 6 - Sessions + Logs (next)
-- Real HTTP/HLS session tracking and UI table.
-- Live log stream + filters.
+Definition of Done:
+- Analytics events are stable and documented.
+- SRT/RTSP I/O works end-to-end with UI/API/runtime parity.
+- Installer/systemd defaults are validated on Ubuntu.
 
-### Phase 7 - Auth + Users (next)
-- User management UI.
-- HTTP Auth methods and allow/deny lists.
-
-### Phase 8 - Monitoring + Integrations (later)
-- Metrics export endpoints and simple dashboards.
-- InfluxDB/Grafana/Zabbix hooks.
-- Telegram alerts (UI + notifier + test endpoint): done.
-
-### Phase 9 - Packaging + Ops (later)
-- Ubuntu systemd service, configs, install scripts.
-- Backup/import/export.
-
-### Phase 10 - Deferred Features (later)
-- SRT/RTSP inputs + SRT output (new module required).
-- RESI modulator output (hardware integration).
-
-### Phase 11 - Buffer Mode (HTTP TS Buffer) (in progress)
-- Settings + SQLite schema for buffer resources/inputs/allow rules.
-- C http_buffer module (ring buffer, smart start, failover, HTTP output).
-- Buffer API endpoints + status + reload/restart-reader.
-- Buffer UI (resources, inputs, allow rules, diagnostics).
-- Smoke tests + documentation updates.
+Gates/Tests:
+- CI smoke + bundle smoke (`contrib/ci/smoke_bundle_transcode.sh`) when packaging changes.
+- Optional SRT/RTSP smoke (if ffmpeg supports protocols).
