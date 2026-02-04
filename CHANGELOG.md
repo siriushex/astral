@@ -12,6 +12,11 @@
 ## Entries
 ### 2026-02-04
 - Changes:
+  - Made General settings more compact with show/hide toggles for optional sections.
+- Tests:
+  - Not run (UI change).
+### 2026-02-04
+- Changes:
   - Added SoftCAM id dropdown in Input settings populated from configured SoftCAMs.
 - Tests:
   - Not run (UI change).
