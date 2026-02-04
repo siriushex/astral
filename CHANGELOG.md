@@ -12,6 +12,12 @@
 ## Entries
 ### 2026-02-04
 - Changes:
+  - Added Softcam settings UI (list + modal) backed by settings.
+  - Added CAS section note that it is not wired yet.
+- Tests:
+  - Not run (UI change).
+### 2026-02-04
+- Changes:
   - Added `.github/workflows/ci.yml` for build + smoke + telegram unit.
 - Tests:
   - Not run (CI only).

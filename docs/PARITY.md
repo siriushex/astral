@@ -62,6 +62,13 @@ Legend: DONE, PARTIAL, TODO
 | Password policy UI | DONE | DONE | DONE | DONE | manual | |
 | HTTP auth settings UI | DONE | DONE | DONE | DONE | manual | |
 
+## Softcam / CAS / License
+| Feature | Status | UI | API | Runtime | Tests | Notes |
+| --- | --- | --- | --- | --- | --- | --- |
+| Softcam settings (list + apply) | DONE | DONE | DONE | DONE | manual | |
+| CAS settings | TODO | TODO | TODO | TODO | N/A | Placeholder UI only |
+| License view | TODO | TODO | TODO | TODO | N/A | Placeholder UI only |
+
 ## Monitoring / Integrations
 | Feature | Status | UI | API | Runtime | Tests | Notes |
 | --- | --- | --- | --- | --- | --- | --- |
