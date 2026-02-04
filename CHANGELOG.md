@@ -12,6 +12,11 @@
 ## Entries
 ### 2026-02-04
 - Changes:
+  - Added Sessions table actions to add client IPs to whitelist/block list.
+- Tests:
+  - Not run (UI change).
+### 2026-02-04
+- Changes:
   - Enforced HTTP auth allow/deny IP lists for stream access even when auth is disabled.
 - Tests:
   - Not run (auth change).
