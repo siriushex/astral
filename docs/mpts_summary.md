@@ -12,6 +12,7 @@
 - LCN tags configurable (`nit.lcn_descriptor_tag` / `nit.lcn_descriptor_tags`).
 - Экспорт MPTS метрик (bitrate/null%/PSI interval) в статус и Prometheus.
 - UI для параметров MPTS + массовые операции по сервисам.
+- Auto-probe сервисов из UDP/RTP входа при пустом `mpts_services` (`advanced.auto_probe`).
 
 ## Ограничения
 - Delivery поддерживается только DVB‑C.
@@ -19,6 +20,7 @@
 - `advanced.target_bitrate <= 0` отключает CBR (игнорируется).
 - `mpts_config.nit.lcn_version` действует как alias для `advanced.nit_version` (если он не задан).
 - Повторяющиеся `mpts_services[].input` используют общий сокет.
+- `advanced.auto_probe` работает только для UDP/RTP и требует `timeout`.
 
 ## Быстрая проверка
 ```bash

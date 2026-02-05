@@ -2163,6 +2163,7 @@
   - Added `/api/v1/mpts/scan` + UI probe button to auto-fill services from UDP inputs.
   - Reused shared input sockets when multiple MPTS services point to the same input URL.
   - Improved MPTS probe UX (prefill from existing input + UDP/RTP validation).
+  - Added optional runtime auto-probe (`advanced.auto_probe`) to populate services from UDP/RTP inputs.
   - Extended CI smoke coverage (PID collision + pass tables) and added TS PID scanner.
   - Extended SPTS generator to emit SDT/EIT/CAT for pass-through tests.
 - Tests:
@@ -2171,3 +2172,4 @@
   - `contrib/ci/smoke_mpts_pass_tables.sh`
   - `contrib/ci/smoke_mpts.sh`
   - `contrib/ci/smoke_mpts_strict_pnr.sh`
+  - Not run (auto-probe UI/runtime update)

@@ -44,6 +44,8 @@
     },
     "advanced": {
       "si_interval_ms": 500,
+      "auto_probe": false,
+      "auto_probe_duration_sec": 3,
       "pcr_restamp": false,
       "pcr_smoothing": false,
       "pcr_smooth_alpha": 0.1,
@@ -134,6 +136,8 @@
 - `advanced.si_interval_ms` меньше 50 игнорируется.
 - `advanced.target_bitrate <= 0` отключает CBR (значение игнорируется).
 - Повторяющиеся `mpts_services[].input` используют общий сокет (один UDP вход на несколько сервисов).
+- `advanced.auto_probe=true` работает только когда `mpts_services` пустой и input — UDP/RTP.
+- `advanced.auto_probe` требует `timeout` в системе (если нет — выводится предупреждение).
 
 ## Быстрая проверка
 ```bash
@@ -154,6 +158,12 @@ python3 tools/mpts_pat_scan.py --addr 239.1.1.1 --port 1234 --duration 3 \\
 Скрипт выводит JSON с PNR/именами из SDT. Полученный список можно вставить в `mpts_services`.
 Также доступен API `/api/v1/mpts/scan` (используется кнопкой “Probe input” в UI), который
 запускает тот же сканер на сервере и возвращает список сервисов для UDP/RTP входов.
+
+## Auto-probe сервисов в рантайме
+Если `mpts_services` не задан и включён `advanced.auto_probe`, MPTS перед запуском
+попробует прочитать PAT/SDT из входа (UDP/RTP) и автоматически сформировать список сервисов.
+Длительность сканирования задаётся `advanced.auto_probe_duration_sec` (1..10 сек).
+Если сканирование не удалось, MPTS упадёт обратно на список input без разделения.
 
 ## CI smoke
 Для быстрых проверок доступны скрипты в `contrib/ci`:
