@@ -12,6 +12,11 @@
 ## Entries
 ### 2026-02-05
 - Changes:
+  - Startup log now includes SSL capability (helps diagnose HTTPS inputs).
+- Tests:
+  - Not run (log-only).
+### 2026-02-05
+- Changes:
   - Serve favicon via web static handler when available (avoid 204 placeholder).
 - Tests:
   - Not run (server change).
