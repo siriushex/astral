@@ -12,6 +12,12 @@
 ## Entries
 ### 2026-02-05
 - Changes:
+  - Removed unsupported MPTS LCN version field from UI and config serialization.
+  - Documented that `mpts_config.nit.lcn_version` is ignored.
+- Tests:
+  - Not run (UI/docs update).
+### 2026-02-05
+- Changes:
   - Added UTF-8 text encoding support for MPTS SDT/NIT strings (codepage marker 0x15).
   - Warn when unsupported MPTS codepage is set.
   - Documented codepage limitation in MPTS design notes.
