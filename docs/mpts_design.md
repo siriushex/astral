@@ -156,6 +156,7 @@ python3 tools/mpts_pat_scan.py --addr 239.1.1.1 --port 1234 --duration 3 \\
 Для быстрых проверок доступны скрипты в `contrib/ci`:
 - `contrib/ci/smoke_mpts.sh` — базовый MPTS smoke.
 - `contrib/ci/smoke_mpts_strict_pnr.sh` — проверка `strict_pnr` (multi‑PAT без PNR).
+- `contrib/ci/smoke_mpts_spts_only.sh` — проверка `spts_only` (multi‑PAT должен быть отклонён).
 - `contrib/ci/smoke.sh` поддерживает опцию `MPTS_STRICT_PNR_SMOKE=1`.
 
 ## Acceptance checklist
