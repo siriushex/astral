@@ -12,6 +12,12 @@
 ## Entries
 ### 2026-02-05
 - Changes:
+  - Documented EXPECT_LOG usage in MPTS design notes.
+  - Added `contrib/ci/README.md` for smoke scripts.
+- Tests:
+  - Not run (docs update).
+### 2026-02-05
+- Changes:
   - Avoid repeated warnings for missing PNR on multi-program PAT inputs.
 - Tests:
   - Not run (log change).
