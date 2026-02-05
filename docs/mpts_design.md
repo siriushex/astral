@@ -43,6 +43,7 @@
     },
     "advanced": {
       "si_interval_ms": 500,
+      "pcr_restamp": false,
       "pat_version": 0,
       "nit_version": 0,
       "cat_version": 0,
@@ -90,6 +91,10 @@
 - `advanced.target_bitrate` (бит/с)
 - При недостаточном входном битрейте вставляются null‑пакеты (PID 0x1FFF)
 - При превышении входного битрейта логируется предупреждение
+
+## PCR restamp
+- `advanced.pcr_restamp` (bool) — переписывает PCR по локальному времени выхода.
+- Полезно для выравнивания PCR при нестабильных/рвущихся входах.
 
 ## Auto‑remap
 - По умолчанию включён.

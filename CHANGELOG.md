@@ -67,6 +67,11 @@
   - Not run (UI hint).
 ### 2026-02-05
 - Changes:
+  - Added PCR restamp option for MPTS (advanced.pcr_restamp).
+- Tests:
+  - Not run (runtime + UI + docs change).
+### 2026-02-05
+- Changes:
   - Warn when target_bitrate is lower than input bitrate (CBR cannot be maintained).
 - Tests:
   - Not run (runtime log change).
