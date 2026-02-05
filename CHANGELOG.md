@@ -12,6 +12,17 @@
 ## Entries
 ### 2026-02-05
 - Changes:
+  - HLS: memfd mode avoids touching disk HLS dir unless disk HLS is explicitly used; playlist rewrite path avoids disk fallback when memfd playlist isn't ready.
+  - HLS: gate `debug_hold_sec` behind `-DHLS_MEMFD_DEBUG`.
+  - Tools: add/update `tools/hls_memfd_smoke.sh` for repeatable HLS memfd on-demand/no-disk sanity.
+  - Preview: add on-demand HLS preview manager (memfd) + smoke coverage.
+  - HTTP: fix `/play` streaming via `http_upstream` send/auth path.
+  - AI: sanitize NaN/Inf in prompts to avoid invalid JSON errors.
+- Tests:
+  - `tools/hls_memfd_smoke.sh`
+  - `./configure.sh && make`
+### 2026-02-05
+- Changes:
   - AI: fix strict JSON schema (Structured Outputs) by requiring all object keys (prevents OpenAI schema validation errors).
 - Tests:
   - `./astra scripts/tests/ai_openai_strict_schema_unit.lua`
