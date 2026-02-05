@@ -12,6 +12,11 @@
 ## Entries
 ### 2026-02-05
 - Changes:
+  - Added optional continuity counter check to MPTS verify and CI.
+- Tests:
+  - Not run (CI script update).
+### 2026-02-05
+- Changes:
   - Added optional PMT PNR assertions to MPTS verify and CI.
 - Tests:
   - Not run (CI script update).
