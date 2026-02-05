@@ -12,6 +12,11 @@
 ## Entries
 ### 2026-02-05
 - Changes:
+  - UI: add min/step hints for MPTS si_interval_ms and target_bitrate.
+- Tests:
+  - Not run (UI hint).
+### 2026-02-05
+- Changes:
   - Release: исправлены кавычки в сборке bundle; обновлены SHA256 для ffmpeg sources.
   - CI: исправлен парсинг логов verify_mpts (работает с префиксами логгера).
 - Tests:
