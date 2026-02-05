@@ -2153,7 +2153,7 @@
   - Added `spts_only` guard, LCN descriptor tag override, and MPTS stats for bitrate/null%/PSI interval.
   - Fixed PAT program counting so `strict_pnr`/`spts_only` detect multi-PAT reliably.
   - Removed unused `pcr_from_pmt` flag to silence build warning.
-  - Updated MPTS UI with bulk actions, pass sources, PCR smoothing fields, and LCN tag input.
+  - Updated MPTS UI with bulk actions, pass sources, PCR smoothing fields, LCN tag input, and built-in manual/enable action.
   - Extended CI smoke coverage (PID collision + pass tables) and added TS PID scanner.
   - Extended SPTS generator to emit SDT/EIT/CAT for pass-through tests.
 - Tests:
