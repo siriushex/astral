@@ -12,6 +12,11 @@
 ## Entries
 ### 2026-02-05
 - Changes:
+  - Log when MPTS PCR restamp is enabled.
+- Tests:
+  - Not run (log change).
+### 2026-02-05
+- Changes:
   - Updated MPTS docs with network_search example and verify hints.
 - Tests:
   - Not run (docs update).
