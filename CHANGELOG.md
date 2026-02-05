@@ -12,7 +12,7 @@
 ## Entries
 ### 2026-02-05
 - Changes:
-  - Updated MPTS docs: EXPECT_LOG example now checks analyzer output (NIT).
+  - Updated MPTS docs: EXPECT_LOG example now checks analyzer output (NIT) in quick check.
 - Tests:
   - Not run (docs update).
 ### 2026-02-05
