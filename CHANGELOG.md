@@ -23,6 +23,27 @@
   - `contrib/ci/smoke_mpts_cat.sh`
 ### 2026-02-06
 - Changes:
+  - UI: add compact mode toggle for Settings -> General cards.
+- Tests:
+  - Not run (UI change only).
+### 2026-02-06
+- Changes:
+  - AI: honor `retry-after` / `x-ratelimit-reset-*` headers when scheduling retries (reduces retry load on 429).
+- Tests:
+  - `./astra scripts/tests/ai_openai_retry_delay_unit.lua`
+### 2026-02-06
+- Changes:
+  - CI: run HLS memfd smoke (`tools/hls_memfd_smoke.sh`) to guard zero-disk/on-demand behavior.
+- Tests:
+  - Not run (CI change only).
+### 2026-02-06
+- Changes:
+  - UI: expose HLS memfd storage/on-demand limits in Settings -> HLS.
+  - HLS: run memfd idle sweep timer whenever memfd handler is enabled (supports per-stream memfd overrides).
+- Tests:
+  - `tools/hls_memfd_smoke.sh`
+### 2026-02-06
+- Changes:
   - MixAudio: modernize FFmpeg API usage to compile against current libavcodec/libavutil.
   - MixAudio: fix module detection to always add system FFmpeg link flags (pkg-config libs).
   - CI: install libavcodec-dev/libavutil-dev/libpq-dev so optional modules (mixaudio/postgres) build in CI.
