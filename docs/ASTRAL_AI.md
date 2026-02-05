@@ -11,6 +11,8 @@
 ## Этапы внедрения
 ### Phase 0 — Scaffolding (готово)
 - Каркас модулей: `ai_runtime.lua`, `ai_tools.lua`, `ai_prompt.lua`, `ai_telegram.lua`.
+- OpenAI клиент вынесен в `ai_openai_client.lua`.
+- Генератор графиков вынесен в `ai_charts.lua`.
 - Настройки `ai_*` в settings, apply разрешён только при `ai_allow_apply=true`.
 - API endpoints:
   - `POST /api/v1/ai/plan`
@@ -73,6 +75,44 @@
 - `ai_logs_retention_days` — хранение лог‑событий (дни, 0 = выключено).
 - `ai_metrics_retention_days` — хранение метрик (дни, 0 = выключено).
 - `ai_rollup_interval_sec` — период агрегации (сек, минимум 30).
+- `ai_metrics_on_demand` — метрики считаются по запросу (логи + runtime snapshot), без фонового rollup.
+- `ai_metrics_cache_sec` — TTL кэша on‑demand метрик (сек), по умолчанию 30.
+
+## AI Context (logs + CLI snapshots)
+AI‑запросы могут включать контекст из логов и CLI‑инструментов **по запросу**:
+- `--stream` (runtime snapshot)
+- `--analyze` (MPEG‑TS анализ)
+- `--dvbls` (список DVB‑адаптеров)
+- `--femon` (сигнал DVB)
+
+Примечание: `stream` и `dvbls` берутся из текущего runtime/модуля (эквивалентно CLI),
+чтобы не запускать отдельный процесс и не увеличивать нагрузку.
+
+Контекст включается параметрами `include_logs` и `include_cli` в `/api/v1/ai/summary` и `/api/v1/ai/plan`.
+
+См. также: `docs/CLI.md`.
+
+### Пример: AI summary с CLI‑контекстом
+```bash
+curl -s "http://127.0.0.1:8000/api/v1/ai/summary?range=24h&ai=1&include_logs=1&include_cli=stream,dvbls&stream_id=abc" \
+  -H "Authorization: Bearer <token>"
+```
+
+### Пример: AI plan с CLI‑контекстом
+```bash
+curl -s "http://127.0.0.1:8000/api/v1/ai/plan" \
+  -H "Authorization: Bearer <token>" \
+  -H "Content-Type: application/json" \
+  -d '{"prompt":"Проверь поток abc","include_logs":true,"include_cli":["stream","dvbls"],"stream_id":"abc"}'
+```
+
+### Настройки CLI (low‑load)
+- `ai_cli_timeout_sec` — таймаут CLI команд (сек), по умолчанию 3.
+- `ai_cli_max_concurrency` — максимум CLI задач одновременно (по умолчанию 1).
+- `ai_cli_cache_sec` — TTL кэша CLI результатов (по умолчанию 60).
+- `ai_cli_output_limit` — лимит вывода (байт), по умолчанию 8000.
+- `ai_cli_bin_path` — путь к бинарю `astral` (опционально).
+- `ai_cli_allow_no_timeout` — разрешить запуск без `timeout` (false по умолчанию).
 
 ### API
 - `GET /api/v1/ai/logs?range=24h&level=ERROR&stream_id=...&limit=500`
@@ -85,7 +125,15 @@
 - Доп. настройка: `telegram_summary_include_charts` (PNG‑график).
 - Если включён AI (`ai_enabled` + ключ + модель), отправляется дополнительный AI‑summary.
 
-Примечание: AI‑summary пока не подключён, эндпоинт отдаёт последний rollup snapshot.
+#### Telegram команды (AI)
+- `/ai summary [24h|7d|30d]` — краткая сводка.
+- `/ai report stream=<id> [range=24h]` — отчёт по потоку.
+- `/ai suggest` — безопасный план улучшений (без apply).
+- `/ai apply plan_id=<id>` — apply для любого плана (prompt или proposed_config), если разрешён и plan готов.
+- `/ai confirm <token>` — подтверждение apply (token выдаётся при `/ai apply`).
+- При `ai_metrics_on_demand=true` команды используют on‑demand метрики (без фонового rollup).
+
+Примечание: `GET /api/v1/ai/summary?ai=1` возвращает AI‑summary при включённом AI (иначе — rollup snapshot).
 
 ## Настройки (через Settings API)
 - `ai_enabled` — включить AI слой (bool).
@@ -95,8 +143,20 @@
 - `ai_store` — хранение на стороне провайдера (по умолчанию false).
 - `ai_allow_apply` — разрешить apply (по умолчанию false).
 - `ai_telegram_allowed_chat_ids` — белый список чатов (список или строка).
+- `ai_api_key` / `ai_api_key_masked` / `ai_api_key_set` — ключ (маска + флаг).
+- `ai_api_base` — базовый URL API.
 
 AI‑эндпоинты отвечают только когда `ai_enabled=true`.
+
+## AstralAI Chat (UI)
+Вкладка **Help → AstralAI Chat**:
+- Чат‑интерфейс в стиле ChatGPT.
+- Вложения (изображения) отправляются как input_image (max 2 файла).
+- Чекбоксы:
+  - **Include logs** — подтянуть ошибки из логов (по запросу).
+  - **CLI tools**: `--stream`, `--dvbls`, `--analyze`, `--femon` (только при запросе).
+- Apply доступен только если `ai_allow_apply=true`.
+ - Для чата включён `preview_diff=true`, чтобы показывать предварительный diff.
 
 ## Audit log
 Для каждого AI‑плана пишется запись в `audit_log`:

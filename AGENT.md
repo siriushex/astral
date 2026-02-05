@@ -6,6 +6,7 @@
 - The server has no DVB support; do not test adapters or any DVB-related flows there.
 - Do not add secrets to the repo. Do not commit `.env` files or keys.
 - Follow the strict team workflow in `docs/engineering/TEAM_WORKFLOW.md` and ownership in `.github/CODEOWNERS`.
+- Performance priority: minimize CPU/RAM/IO usage. Avoid background timers and frequent polling by default; prefer on‑demand or cached workflows unless explicitly required.
 
 ## Codex environment setup (multi-agent)
 - Use a separate working tree per agent to avoid file collisions:
