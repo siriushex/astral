@@ -17,6 +17,7 @@
       "service_name": "News",
       "service_provider": "Provider",
       "service_type_id": 1,
+      "lcn": 101,
       "pnr": 101,
       "scrambled": false
     }
@@ -80,6 +81,7 @@
 - PMT: корректные PCR_PID и ES PID после ремапа
 - SDT (Actual): service_descriptor (service_type/provider/name), free_CA_mode
 - NIT (Actual): network_name + service_list + delivery descriptor (DVB‑C; другие delivery пока не применяются)
+- LCN: если задан `mpts_services[].lcn`, добавляется logical_channel_descriptor (0x83) в NIT
 - TDT/TOT: UTC время; TOT с local_time_offset_descriptor при задании country/utc_offset
 - CAT: генерируется пустой (без CA descriptors)
 - EIT: выключен по умолчанию; pass‑through при `pass_eit` (только для single input)
@@ -97,6 +99,7 @@
 - Для стабильной работы каждый input рекомендуется как SPTS.
 - EIT/CAT pass‑through корректен только при 1 сервисе (иначе возможны коллизии).
 - `nit.network_search` принимает список `tsid` или `tsid:onid` через запятую и добавляет их в NIT.
+- `mpts_services[].lcn` допускает значения 1..1023 (0 игнорируется).
 
 ## Быстрая проверка
 ```bash
