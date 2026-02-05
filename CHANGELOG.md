@@ -12,6 +12,11 @@
 ## Entries
 ### 2026-02-06
 - Changes:
+  - AI: add `Content-Length` header for OpenAI requests (fixes OpenAI 400 "Missing required parameter: model" when body is ignored).
+- Tests:
+  - `./astra scripts/tests/ai_openai_host_header_unit.lua`
+### 2026-02-06
+- Changes:
   - AI: add `Host` and `User-Agent` headers for OpenAI requests (fixes Cloudflare 400 when Host is missing).
 - Tests:
   - `./astra scripts/tests/ai_openai_host_header_unit.lua`
