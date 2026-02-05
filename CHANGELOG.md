@@ -12,11 +12,11 @@
 ## Entries
 ### 2026-02-05
 - Changes:
-  - UI Player: восстановлены ссылки `/play/<id>` и работа кнопок Open/Copy; добавлена поддержка MP2TS источника.
+  - Transcode: publish selected GPU stats/limits/overload in status for UI.
+  - UI: GPU info now reflects actual metrics and overload state.
+  - AI: proxy requests write JSON body to temp file for curl payload.
 - Tests:
-  - Server build: `./configure.sh && make` (root@178.212.236.2:/home/hex/astra).
-  - UI (port 9061): `curl -I http://127.0.0.1:9061/index.html`
-  - UI asset (port 9061): `curl -s http://127.0.0.1:9061/app.js | head -n 1`
+  - Not run (UI/status changes).
 ### 2026-02-05
 - Changes:
   - MPTS/CI: обновлён verify_mpts (UTF-8 marker, Bitrate parsing, устойчивость к префиксам логов).
