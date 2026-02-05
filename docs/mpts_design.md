@@ -143,6 +143,14 @@ EXPECT_LOG="NIT: network_id: 1" ./tools/verify_mpts.sh "udp://127.0.0.1:12346"
 ```
 `EXPECT_TOT=1` нужен, если указан `country` и ожидается TOT.
 
+## Auto-split helper (multi-PAT)
+Если вход содержит несколько программ (multi-PAT), удобнее заранее собрать `mpts_services`:
+```bash
+python3 tools/mpts_pat_scan.py --addr 239.1.1.1 --port 1234 --duration 3 \\
+  --input "udp://239.1.1.1:1234" --pretty
+```
+Скрипт выводит JSON с PNR/именами из SDT. Полученный список можно вставить в `mpts_services`.
+
 ## CI smoke
 Для быстрых проверок доступны скрипты в `contrib/ci`:
 - `contrib/ci/smoke_mpts.sh` — базовый MPTS smoke.

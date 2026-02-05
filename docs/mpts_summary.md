@@ -26,6 +26,12 @@ EXPECT_TOT=1 EXPECT_PNRS="101,102" EXPECT_PMT_PNRS="101,102" ./tools/verify_mpts
 EXPECT_LOG="NIT: network_id: 1" ./tools/verify_mpts.sh "udp://127.0.0.1:12346"
 ```
 
+## Auto-split helper
+```bash
+python3 tools/mpts_pat_scan.py --addr 239.1.1.1 --port 1234 --duration 3 \\
+  --input "udp://239.1.1.1:1234" --pretty
+```
+
 ## CI smoke
 ```bash
 contrib/ci/smoke_mpts.sh
