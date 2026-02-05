@@ -16,6 +16,7 @@
   - Added AI observability API endpoints: `/api/v1/ai/logs`, `/api/v1/ai/metrics`, `/api/v1/ai/summary`.
   - Added Settings → General controls for observability retention + rollup interval.
   - Added Observability view with summary cards and charts.
+  - Added Observability error log list (last 20 errors).
   - Added Telegram summary scheduler with optional charts and manual send.
   - Added optional AI summary (OpenAI) for Telegram reports when AI is enabled.
   - Extended Telegram summary charts (bitrate + streams down).
