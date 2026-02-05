@@ -61,6 +61,11 @@
 
 AI‑эндпоинты отвечают только когда `ai_enabled=true`.
 
+## Audit log
+Для каждого AI‑плана пишется запись в `audit_log`:
+- `action`: `ai_plan`
+- `meta`: режим (`diff` или `prompt`), summary/diff.
+
 ## Переменные окружения
 - `ASTRAL_OPENAI_API_KEY` или `OPENAI_API_KEY`.
 

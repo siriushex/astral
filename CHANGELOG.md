@@ -16,6 +16,7 @@
   - Implemented local AI plan diff (validate + snapshot + diff summary).
   - Added AI plan prompt mode (Responses API structured outputs).
   - Added safe AI context summary builder (streams/adapters).
+  - Added AI audit log entries and retry/backoff with rate-limit header capture.
 - Tests:
   - Not run (scaffold-only).
 ### 2026-02-05
