@@ -12,6 +12,11 @@
 ## Entries
 ### 2026-02-05
 - Changes:
+  - Added CI smoke notes to MPTS design doc.
+- Tests:
+  - Not run (docs update).
+### 2026-02-05
+- Changes:
   - Documented EXPECT_LOG usage in MPTS design notes.
   - Added `contrib/ci/README.md` for smoke scripts.
 - Tests:

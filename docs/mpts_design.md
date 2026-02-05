@@ -122,3 +122,9 @@ EXPECT_TOT=1 EXPECT_NIT_TS_LIST="1:1,2:1,3:1" EXPECT_PMT_ES_PIDS="101=256;102=25
 EXPECT_LOG="strict_pnr=true -> поток отклонён" ./tools/verify_mpts.sh "udp://127.0.0.1:12350"
 ```
 `EXPECT_TOT=1` нужен, если указан `country` и ожидается TOT.
+
+## CI smoke
+Для быстрых проверок доступны скрипты в `contrib/ci`:
+- `contrib/ci/smoke_mpts.sh` — базовый MPTS smoke.
+- `contrib/ci/smoke_mpts_strict_pnr.sh` — проверка `strict_pnr` (multi‑PAT без PNR).
+- `contrib/ci/smoke.sh` поддерживает опцию `MPTS_STRICT_PNR_SMOKE=1`.
