@@ -12,6 +12,11 @@
 ## Entries
 ### 2026-02-05
 - Changes:
+  - UI: editor warmup badge now includes timeline (start/ready/last/deadline).
+- Tests:
+  - Not run (UI change only).
+### 2026-02-05
+- Changes:
   - UI: analyze shows warmup timeline (start/ready/last progress/deadline).
 - Tests:
   - Not run (UI change only).
