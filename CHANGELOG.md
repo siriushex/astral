@@ -12,6 +12,13 @@
 ## Entries
 ### 2026-02-05
 - Changes:
+  - Added UTF-8 text encoding support for MPTS SDT/NIT strings (codepage marker 0x15).
+  - Warn when unsupported MPTS codepage is set.
+  - Documented codepage limitation in MPTS design notes.
+- Tests:
+  - Not run (text encoding change).
+### 2026-02-05
+- Changes:
   - Warn when `mpts_config.nit.lcn_version` is set (ignored).
 - Tests:
   - Not run (log change).
