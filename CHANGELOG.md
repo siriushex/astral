@@ -17,6 +17,7 @@
   - Added Settings → General controls for observability retention + rollup interval.
   - Added Observability view with summary cards and charts.
   - Added Telegram summary scheduler with optional charts and manual send.
+  - Added optional AI summary (OpenAI) for Telegram reports when AI is enabled.
   - Reconfigured observability on settings updates.
 - Tests:
   - Not run (UI + API wiring only).
