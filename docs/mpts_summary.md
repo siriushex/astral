@@ -18,6 +18,7 @@
 - `advanced.si_interval_ms` < 50 игнорируется.
 - `advanced.target_bitrate <= 0` отключает CBR (игнорируется).
 - `mpts_config.nit.lcn_version` действует как alias для `advanced.nit_version` (если он не задан).
+- Повторяющиеся `mpts_services[].input` используют общий сокет.
 
 ## Быстрая проверка
 ```bash

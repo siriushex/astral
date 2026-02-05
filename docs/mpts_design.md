@@ -120,7 +120,7 @@
 
 ## Ограничения
 - Для стабильной работы каждый input рекомендуется как SPTS.
-- EIT/CAT pass‑through берётся из одного источника (`eit_source`/`cat_source`).
+- EIT/CAT pass-through берётся из одного источника (`eit_source`/`cat_source`).
 - `nit.network_search` принимает список `tsid` или `tsid:onid` через запятую и добавляет их в NIT.
 - `mpts_services[].lcn` допускает значения 1..1023 (0 игнорируется).
 - `mpts_config.nit.lcn_version` поддерживается как совместимый alias для `advanced.nit_version`
@@ -133,6 +133,7 @@
 - `advanced.spts_only=true` запрещает входы с multi-PAT даже при заданном `pnr`.
 - `advanced.si_interval_ms` меньше 50 игнорируется.
 - `advanced.target_bitrate <= 0` отключает CBR (значение игнорируется).
+- Повторяющиеся `mpts_services[].input` используют общий сокет (один UDP вход на несколько сервисов).
 
 ## Быстрая проверка
 ```bash
