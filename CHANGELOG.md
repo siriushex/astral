@@ -12,6 +12,11 @@
 ## Entries
 ### 2026-02-05
 - Changes:
+  - UI Player: ссылка и кнопки Open/Copy используют `/play/<stream_id>`; для `<video>` выбирается прямой HTTP Play при поддержке MPEG-TS.
+- Tests:
+  - Not run (UI change only).
+### 2026-02-05
+- Changes:
   - Config: экспортирует основной JSON-конфиг при изменениях (streams/adapters/settings) при запуске с `--config *.json`.
   - Config: при ошибке apply откатывает основной JSON-конфиг к LKG-снимку.
 - Tests:
