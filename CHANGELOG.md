@@ -12,6 +12,13 @@
 ## Entries
 ### 2026-02-05
 - Changes:
+  - AI: force on-demand metrics (no rollup), hide UI AI summary and compute observability summary from metrics.
+  - AI: Telegram command parsing now supports keys with `_` / `-` (e.g. plan_id).
+  - Docs: clarify minimal-load AI defaults and auto context selection.
+- Tests:
+  - `./astra scripts/tests/ai_telegram_commands_unit.lua`
+### 2026-02-05
+- Changes:
   - Transcode: add warmup failure/timeout/stop alerts for failover diagnostics.
 - Tests:
   - Not run (logic change only).
