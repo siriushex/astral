@@ -2158,6 +2158,7 @@
   - Added LCN version alias (`nit.lcn_version`) and UI warning for NIT version precedence.
   - Added PAT/SDT scan helper to build `mpts_services` from multi-PAT inputs.
   - Added multi-tag LCN output (`nit.lcn_descriptor_tags`) for receiver compatibility.
+  - Added MPTS stats line to stream tiles and SPTS-only duplicate-input warning.
   - Extended CI smoke coverage (PID collision + pass tables) and added TS PID scanner.
   - Extended SPTS generator to emit SDT/EIT/CAT for pass-through tests.
 - Tests:
