@@ -31,6 +31,7 @@ EXPECT_LOG="NIT: network_id: 1" ./tools/verify_mpts.sh "udp://127.0.0.1:12346"
 python3 tools/mpts_pat_scan.py --addr 239.1.1.1 --port 1234 --duration 3 \\
   --input "udp://239.1.1.1:1234" --pretty
 ```
+UI “Probe input” использует `/api/v1/mpts/scan` и возвращает список сервисов для UDP/RTP.
 
 ## CI smoke
 ```bash

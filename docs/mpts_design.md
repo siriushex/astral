@@ -151,6 +151,8 @@ python3 tools/mpts_pat_scan.py --addr 239.1.1.1 --port 1234 --duration 3 \\
   --input "udp://239.1.1.1:1234" --pretty
 ```
 Скрипт выводит JSON с PNR/именами из SDT. Полученный список можно вставить в `mpts_services`.
+Также доступен API `/api/v1/mpts/scan` (используется кнопкой “Probe input” в UI), который
+запускает тот же сканер на сервере и возвращает список сервисов для UDP/RTP входов.
 
 ## CI smoke
 Для быстрых проверок доступны скрипты в `contrib/ci`:
