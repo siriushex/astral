@@ -2147,3 +2147,17 @@
   - `POST http://127.0.0.1:9017/api/v1/auth/login`
   - `GET http://127.0.0.1:9017/api/v1/stream-status/failover_passive` (inputs + switch checks)
   - `GET http://127.0.0.1:9017/api/v1/stream-status/failover_active` (switch + return checks)
+### 2026-02-05
+- Changes:
+  - Added PCR smoothing (EWMA) options and pass-through EIT/CAT handling in MPTS mux.
+  - Added `spts_only` guard, LCN descriptor tag override, and MPTS stats for bitrate/null%/PSI interval.
+  - Fixed PAT program counting so `strict_pnr`/`spts_only` detect multi-PAT reliably.
+  - Updated MPTS UI with bulk actions, pass sources, PCR smoothing fields, and LCN tag input.
+  - Extended CI smoke coverage (PID collision + pass tables) and added TS PID scanner.
+  - Extended SPTS generator to emit SDT/EIT/CAT for pass-through tests.
+- Tests:
+  - `python3 -m py_compile tools/gen_spts.py tools/scan_pid.py`
+  - `contrib/ci/smoke_mpts_pid_collision.sh`
+  - `contrib/ci/smoke_mpts_pass_tables.sh`
+  - `contrib/ci/smoke_mpts.sh`
+  - `contrib/ci/smoke_mpts_strict_pnr.sh`
