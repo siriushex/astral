@@ -12,6 +12,16 @@
 ## Entries
 ### 2026-02-05
 - Changes:
+  - UI: clarify missing PNR warning when Strict PNR is enabled.
+- Tests:
+  - Not run (UI-only warning).
+### 2026-02-05
+- Changes:
+  - UI: added hint explaining Strict PNR behavior.
+- Tests:
+  - Not run (UI hint).
+### 2026-02-05
+- Changes:
   - Added `strict_pnr` (advanced) to reject multi-program inputs without explicit PNR.
   - UI: toggle for Strict PNR in MPTS Advanced section.
 - Tests:
