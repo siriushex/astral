@@ -12,6 +12,13 @@
 ## Entries
 ### 2026-02-06
 - Changes:
+  - UI: expose HLS memfd storage/on-demand limits in Settings -> HLS.
+  - HLS: run memfd idle sweep timer whenever memfd handler is enabled (supports per-stream memfd overrides).
+- Tests:
+  - `./configure.sh && make`
+  - `tools/hls_memfd_smoke.sh`
+### 2026-02-06
+- Changes:
   - Tools: HLS memfd smoke now validates playlist no-cache/no-store headers (regression guard).
 - Tests:
   - `tools/hls_memfd_smoke.sh`
