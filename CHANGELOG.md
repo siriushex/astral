@@ -10,6 +10,11 @@
     - Itemized list of tests (or "Not run")
 
 ## Entries
+### 2026-02-06
+- Changes:
+  - AI/Observability: fix sqlite abort by storing md5 fingerprint as hex (no NUL bytes) and making AI log/metric inserts non-fatal.
+- Tests:
+  - Not run (covered by CI).
 ### 2026-02-05
 - Changes:
   - AI: scrub ASCII control bytes and sanitize UTF-8 in OpenAI request bodies (prevents OpenAI "Invalid body: failed to parse JSON value" 400s).
