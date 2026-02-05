@@ -27,6 +27,9 @@
   - Added per-stream segment lookup hash to avoid linear scans on memfd reads.
   - Added stream lookup hash for memfd streams to speed up hls_memfd touch/lookup.
   - Added stream-hash rehashing when memfd stream count grows.
+  - Added stream-hash shrink/rehash on memfd stream removal.
+  - Logged discontinuity when memfd drops a non-head segment under memory pressure.
+  - Added `debug_hold_sec` for HLS memfd tests to pin the first segment.
   - Added HLS in-memory counters (`current_segments`, `current_bytes`) to stream status.
   - Added HLS memfd settings wiring + documentation and example config.
 - Tests:
@@ -44,7 +47,7 @@
   - HLS memfd idle (port 9030): old segment returns 404 after idle deactivation.
   - HLS memfd mem-limit drop (port 9031): drop log appears while a segment is busy.
   - HLS memfd hash lookup (port 9032): playlist/segment fetch returns 200.
-  - HLS memfd stream hash (port 9036): playlist/segment fetch returns 200.
+  - HLS memfd stream hash (port 9037): playlist/segment fetch returns 200.
 ### 2026-02-05
 - Changes:
   - Added `docs/API.md` with current API reference.
