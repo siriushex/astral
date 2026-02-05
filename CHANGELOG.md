@@ -12,6 +12,11 @@
 ## Entries
 ### 2026-02-05
 - Changes:
+  - Added MPTS acceptance checklist to design doc.
+- Tests:
+  - Not run (docs update).
+### 2026-02-05
+- Changes:
   - UI: added hint that only DVB-C delivery is supported for MPTS.
 - Tests:
   - Not run (UI hint).

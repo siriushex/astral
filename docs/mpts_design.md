@@ -128,3 +128,13 @@ EXPECT_LOG="strict_pnr=true -> поток отклонён" ./tools/verify_mpts.
 - `contrib/ci/smoke_mpts.sh` — базовый MPTS smoke.
 - `contrib/ci/smoke_mpts_strict_pnr.sh` — проверка `strict_pnr` (multi‑PAT без PNR).
 - `contrib/ci/smoke.sh` поддерживает опцию `MPTS_STRICT_PNR_SMOKE=1`.
+
+## Acceptance checklist
+- [x] MPTS мультиплексирует 2+ сервиса в один TS (PAT/PMT/SDT/NIT/TDT/TOT).
+- [x] PID/PNR уникальны, auto-remap по умолчанию.
+- [x] Настройки network_id/network_name/tsid/onid/service/provider применяются.
+- [x] DVB-C delivery (frequency/symbolrate/modulation/fec) в NIT.
+- [x] CBR с null stuffing (target_bitrate).
+- [x] UI отражает доступные параметры и предупреждает о конфликтных режимах.
+- [x] Polling/обновления статусов не сбрасывают состояние MPTS.
+- [x] Документация и smoke-скрипты доступны.
