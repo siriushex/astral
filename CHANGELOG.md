@@ -12,6 +12,60 @@
 ## Entries
 ### 2026-02-05
 - Changes:
+  - UI: warmup alerts now show actionable hints.
+- Tests:
+  - Not run (UI change only).
+### 2026-02-05
+- Changes:
+  - AI: force on-demand metrics (no rollup), hide UI AI summary and compute observability summary from metrics.
+  - AI: Telegram command parsing now supports keys with `_` / `-` (e.g. plan_id).
+  - Docs: clarify minimal-load AI defaults and auto context selection.
+- Tests:
+  - `./astra scripts/tests/ai_telegram_commands_unit.lua`
+### 2026-02-05
+- Changes:
+  - Transcode: add warmup failure/timeout/stop alerts for failover diagnostics.
+- Tests:
+  - Not run (logic change only).
+### 2026-02-05
+- Changes:
+  - UI: editor warmup badge now includes timeline (start/ready/last/deadline).
+- Tests:
+  - Not run (UI change only).
+### 2026-02-05
+- Changes:
+  - UI: analyze shows warmup timeline (start/ready/last progress/deadline).
+- Tests:
+  - Not run (UI change only).
+### 2026-02-05
+- Changes:
+  - UI: warmup badge now includes stable/IDR hints on transcode tiles.
+- Tests:
+  - Not run (UI change only).
+### 2026-02-05
+- Changes:
+  - UI: analyze now shows detailed warmup diagnostics (ready/stable/IDR/timestamps).
+- Tests:
+  - Not run (UI change only).
+### 2026-02-05
+- Changes:
+  - UI: compact view shows warmup status on transcode tiles.
+- Tests:
+  - Not run (UI change only).
+### 2026-02-05
+- Changes:
+  - UI: analyze shows GPU overload reason and GPU metrics error.
+- Tests:
+  - Not run (UI change only).
+### 2026-02-05
+- Changes:
+  - Transcode: publish selected GPU stats/limits/overload in status for UI.
+  - UI: GPU info now reflects actual metrics and overload state.
+  - AI: proxy requests write JSON body to temp file for curl payload.
+- Tests:
+  - Not run (UI/status changes).
+### 2026-02-05
+- Changes:
   - MPTS/CI: обновлён verify_mpts (UTF-8 marker, Bitrate parsing, устойчивость к префиксам логов).
   - MPTS: анализатор NIT декодирует network_name с учётом кодировки.
   - CI: check_changelog учитывает shallow clone; check_branch_name допускает codex/<topic>.
