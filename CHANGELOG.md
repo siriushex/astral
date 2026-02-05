@@ -2147,3 +2147,12 @@
   - `POST http://127.0.0.1:9017/api/v1/auth/login`
   - `GET http://127.0.0.1:9017/api/v1/stream-status/failover_passive` (inputs + switch checks)
   - `GET http://127.0.0.1:9017/api/v1/stream-status/failover_active` (switch + return checks)
+# 2026-02-05
+- Changes:
+  - Improved OpenAI client error details and auto‑retry without images on 400 image‑input errors.
+  - Normalized `ai_api_base` to avoid duplicate `/v1` paths.
+  - AI context now includes logs by default and always provides a stream runtime snapshot; dvb/analyze/femon remain on‑demand.
+  - Updated `docs/ASTRAL_AI.md` to reflect minimal‑load defaults and chat behavior.
+  - Adjusted AI autoselect unit test for new log‑default behavior.
+- Tests:
+  - Not run (server deploy only).
