@@ -13,6 +13,7 @@
 ### 2026-02-05
 - Changes:
   - Added AstralAI scaffolding (AI runtime/tools stubs + API endpoints).
+  - Implemented local AI plan diff (validate + snapshot + diff summary).
 - Tests:
   - Not run (scaffold-only).
 ### 2026-02-05
