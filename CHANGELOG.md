@@ -12,6 +12,12 @@
 ## Entries
 ### 2026-02-05
 - Changes:
+  - Added `strict_pnr` (advanced) to reject multi-program inputs without explicit PNR.
+  - UI: toggle for Strict PNR in MPTS Advanced section.
+- Tests:
+  - Not run (behavior toggle).
+### 2026-02-05
+- Changes:
   - Warn when MPTS input PAT contains multiple programs and PNR is not set.
 - Tests:
   - Not run (log change).

@@ -44,6 +44,7 @@
     "advanced": {
       "si_interval_ms": 500,
       "pcr_restamp": false,
+      "strict_pnr": false,
       "pat_version": 0,
       "nit_version": 0,
       "cat_version": 0,
@@ -110,6 +111,7 @@
 - `mpts_config.nit.lcn_version` не поддерживается и игнорируется.
 - `general.codepage` поддерживает только UTF-8 (маркер 0x15 в дескрипторах).
 - `mpts_services[].service_type_id` допускает значения 1..255 (пусто = 1).
+- `advanced.strict_pnr=true` запрещает использовать входные PAT с несколькими программами без явного `pnr`.
 
 ## Быстрая проверка
 ```bash
