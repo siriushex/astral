@@ -12,6 +12,123 @@
 ## Entries
 ### 2026-02-05
 - Changes:
+  - Release: исправлены кавычки в сборке bundle; обновлены SHA256 для ffmpeg sources.
+  - Release: корректное определение версии из version.h для имени bundle (без падения при отсутствии ASTRA_VERSION).
+  - CI: check_changelog учитывает shallow clone и подтягивает merge-base.
+- Tests:
+  - Not run (CI fix).
+### 2026-02-05
+- Changes:
+  - UI: hide/remove Observability AI summary block from the page (AI uses it internally).
+  - UI: AstralAI chat now shows attachment previews (image thumbnails + filenames).
+  - UI: AstralAI chat shows inline image thumbnails and enhanced waiting animation.
+  - UI: AstralAI chat `/help` returns local hints without calling AI.
+  - AstralAI: normalize ai_api_base so trailing `/v1` is handled correctly.
+- Tests:
+  - `./astra scripts/tests/ai_openai_url_unit.lua`
+### 2026-02-05
+- Changes:
+  - AstralAI: auto-include on-demand metrics in AI context when prompt asks for charts/metrics.
+  - AstralAI: clamp and downsample metrics in context to reduce load.
+- Tests:
+  - `scripts/tests/ai_metrics_autoselect_unit.lua`
+### 2026-02-05
+- Changes:
+  - UI: Observability/Help/Access отображаются только при включении соответствующих опций в Settings → General.
+- Tests:
+  - Not run (UI change only).
+### 2026-02-05
+- Changes:
+  - AstralAI: default model `gpt-5.2` with fallback to `gpt-5-mini` and `gpt-4.1` on `model_not_found`.
+  - AstralAI: auto-select logs/CLI context by prompt to reduce load.
+  - AstralAI: allow optional `charts` field in AI responses (line/bar series).
+  - AstralAI: AI summary no longer includes logs unless `include_logs=1` is set (lower load).
+  - Observability: when `ai_metrics_on_demand=true`, metrics retention forced to `0` (no background rollups).
+  - UI: AI chat no longer forces log inclusion; status shows effective model.
+- Tests:
+  - `./astra scripts/tests/ai_openai_model_fallback_unit.lua`
+  - `./astra scripts/tests/ai_observability_on_demand_config_unit.lua`
+  - `./astra scripts/tests/ai_logs_autoselect_unit.lua`
+  - `./astra scripts/tests/ai_cli_autoselect_unit.lua`
+### 2026-02-05
+- Changes:
+  - Analyze: модалка показывает подробные PSI/PMT/PID/codec данные через on-demand analyze API.
+- Tests:
+  - Not run (UI/API change only).
+### 2026-02-05
+- Changes:
+  - AstralAI: default model set to `gpt-5.2` with automatic fallback to `gpt-5-mini` and `gpt-4.1` on `model_not_found`.
+  - AstralAI: auto-select logs/CLI context by prompt to reduce load (logs/CLI only when needed).
+  - Observability: when `ai_metrics_on_demand=true`, metrics retention is forced to `0` (no background rollups).
+  - UI: AI chat no longer forces log inclusion; status uses default model when field is empty.
+- Tests:
+  - `./astra scripts/tests/ai_openai_model_fallback_unit.lua`
+  - `./astra scripts/tests/ai_observability_on_demand_config_unit.lua`
+### 2026-02-05
+- Changes:
+  - Streams/Adapters: при сохранении синхронизируется `enable` в config_json, чтобы disable не терялся в JSON и после рестарта.
+- Tests:
+  - Not run (config persistence fix).
+### 2026-02-05
+- Changes:
+  - UI Player: ссылка и кнопки Open/Copy используют `/play/<stream_id>`; для `<video>` выбирается прямой HTTP Play при поддержке MPEG-TS.
+- Tests:
+  - Not run (UI change only).
+### 2026-02-05
+- Changes:
+  - Config: экспортирует основной JSON-конфиг при изменениях (streams/adapters/settings) при запуске с `--config *.json`.
+  - Config: при ошибке apply откатывает основной JSON-конфиг к LKG-снимку.
+- Tests:
+  - Server: `./configure.sh && make` (root@178.212.236.2:/home/hex/astra).
+  - UI (port 9060): `curl -I http://127.0.0.1:9060/index.html`
+  - UI asset (port 9060): `curl -s http://127.0.0.1:9060/app.js | head -n 1`
+  - Auth (port 9060): `POST /api/v1/auth/login`
+  - API (port 9060, cookie auth): `GET /api/v1/streams`, `GET /api/v1/settings`
+  - Metrics/health (port 9060): `GET /api/v1/metrics`, `GET /api/v1/metrics?format=prometheus`, `GET /api/v1/health/*`
+  - Config (port 9060, CSRF header): `POST /api/v1/config/validate`, `GET /api/v1/config/revisions`, `POST /api/v1/reload`
+  - Export (port 9060): `GET /api/v1/export?include_users=0`
+  - Export CLI: `./astra scripts/export.lua --data-dir ./data --output ./astra-export.json`
+### 2026-02-05
+- Changes:
+  - Transcode failover: improved warmup/pending switch handling and return-to-primary logic.
+- Tests:
+  - Not run (transcode logic changes).
+### 2026-02-05
+- Changes:
+  - Added ffmpeg warmup before failover switches (configurable via `backup_switch_warmup_sec`/`switch_warmup_sec`).
+  - Exposed warmup status in transcode state and Analyze UI.
+- Tests:
+  - Not run (transcode logic/UI changes).
+### 2026-02-05
+- Changes:
+  - UI: добавлена автоподсветка активного раздела Settings → General при прокрутке.
+  - UI: убран блок Observability AI Summary, чтобы AI‑сводка запускалась только по запросу (API/Telegram).
+- Tests:
+  - Server: `./configure.sh && make` (root@178.212.236.2:/home/hex/astra).
+  - UI (port 9060): `curl -I http://127.0.0.1:9060/index.html`
+  - UI asset (port 9060): `curl -s http://127.0.0.1:9060/app.js | head -n 1`
+  - Auth (port 9060): `POST /api/v1/auth/login`
+  - API (port 9060, cookie auth): `GET /api/v1/streams`, `GET /api/v1/settings`
+  - Metrics/health (port 9060): `GET /api/v1/metrics`, `GET /api/v1/metrics?format=prometheus`, `GET /api/v1/health/*`
+  - Config (port 9060, CSRF header): `POST /api/v1/config/validate`, `GET /api/v1/config/revisions`, `POST /api/v1/reload`
+  - Export (port 9060): `GET /api/v1/export?include_users=0`
+  - Export CLI: `./astra scripts/export.lua --data-dir ./data --output ./astra-export.json`
+### 2026-02-05
+- Changes:
+  - UI: перестроена вкладка Settings → General на разделы и карточки с поиском, переключателем базовых/расширенных, sticky-панелью действий и едиными switch-контролами.
+  - UI: добавлено подтверждение для Allow apply в AstraAI и переключатель отображения лимитов в разделе безопасности.
+- Tests:
+  - Server: `./configure.sh && make` (root@178.212.236.2:/home/hex/astra).
+  - UI (port 9060): `curl -I http://127.0.0.1:9060/index.html`
+  - UI asset (port 9060): `curl -s http://127.0.0.1:9060/app.js | head -n 1`
+  - Auth (port 9060): `POST /api/v1/auth/login`
+  - API (port 9060, cookie auth): `GET /api/v1/streams`, `GET /api/v1/settings`
+  - Metrics/health (port 9060): `GET /api/v1/metrics`, `GET /api/v1/metrics?format=prometheus`, `GET /api/v1/health/*`
+  - Config (port 9060, CSRF header): `POST /api/v1/config/validate`, `GET /api/v1/config/revisions`, `POST /api/v1/reload`
+  - Export (port 9060): `GET /api/v1/export?include_users=0`
+  - Export CLI: `./astra scripts/export.lua --data-dir ./data --output ./astra-export.json`
+### 2026-02-05
+- Changes:
   - Added automatic contrib ffmpeg build fallback for mixaudio module when system libs are missing.
   - Enabled mixaudio and postgres module builds when dependencies are available (pkg-config/pg_config support).
 - Tests:
