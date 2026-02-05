@@ -12,6 +12,11 @@
 ## Entries
 ### 2026-02-05
 - Changes:
+  - Added AstralAI scaffolding (AI runtime/tools stubs + API endpoints).
+- Tests:
+  - Not run (scaffold-only).
+### 2026-02-05
+- Changes:
   - Added View menu toggle to show/hide disabled streams.
   - Updated UI build stamp and asset version to 20260205p.
 - Tests:
