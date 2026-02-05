@@ -81,7 +81,8 @@
 - SDT (Actual): service_descriptor (service_type/provider/name), free_CA_mode
 - NIT (Actual): network_name + service_list + delivery descriptor (DVB‑C)
 - TDT/TOT: UTC время; TOT с local_time_offset_descriptor при задании country/utc_offset
-- CAT/EIT: выключены по умолчанию; pass‑through при `pass_*` (только для single input)
+- CAT: не генерируется (зарезервирован на будущее)
+- EIT: выключен по умолчанию; pass‑through при `pass_eit` (только для single input)
 
 ## CBR режим
 - `advanced.target_bitrate` (бит/с)
