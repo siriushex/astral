@@ -12,6 +12,17 @@
 ## Entries
 ### 2026-02-05
 - Changes:
+  - Transcode failover: improved warmup/pending switch handling and return-to-primary logic.
+- Tests:
+  - Not run (transcode logic changes).
+### 2026-02-05
+- Changes:
+  - Added ffmpeg warmup before failover switches (configurable via `backup_switch_warmup_sec`/`switch_warmup_sec`).
+  - Exposed warmup status in transcode state and Analyze UI.
+- Tests:
+  - Not run (transcode logic/UI changes).
+### 2026-02-05
+- Changes:
   - UI: добавлена автоподсветка активного раздела Settings → General при прокрутке.
   - UI: убран блок Observability AI Summary, чтобы AI‑сводка запускалась только по запросу (API/Telegram).
 - Tests:
