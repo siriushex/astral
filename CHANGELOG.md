@@ -12,6 +12,11 @@
 ## Entries
 ### 2026-02-06
 - Changes:
+  - UI: reduce AstralAI chat polling load and show clearer retry/error status details.
+- Tests:
+  - Not run (UI change only).
+### 2026-02-06
+- Changes:
   - AI: fix OpenAI retry backoff timer scoping (prevents panic on retries).
 - Tests:
   - `./astra scripts/tests/ai_openai_retry_scope_unit.lua`
