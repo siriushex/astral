@@ -37,6 +37,11 @@
   - Not run (UI text update).
 ### 2026-02-05
 - Changes:
+  - Added UI validation hint for missing DVB-C delivery fields in MPTS.
+- Tests:
+  - Not run (UI change).
+### 2026-02-05
+- Changes:
   - Added MPTS lint warnings for unsupported delivery types and missing DVB-C fields.
 - Tests:
   - Not run (lint-only).
