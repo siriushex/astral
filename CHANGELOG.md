@@ -17,10 +17,11 @@
   - Tools: add/update `tools/hls_memfd_smoke.sh` for repeatable HLS memfd on-demand/no-disk sanity.
   - Preview: add on-demand HLS preview manager (memfd) + smoke coverage.
   - HTTP: fix `/play` streaming via `http_upstream` send/auth path.
-  - AI: sanitize NaN/Inf in prompts to avoid invalid JSON errors.
+  - AI: sanitize NaN/Inf in context/payload JSON to avoid OpenAI "Invalid body: failed to parse JSON" errors.
 - Tests:
   - `tools/hls_memfd_smoke.sh`
   - `./configure.sh && make`
+  - `./astra scripts/tests/ai_prompt_sanitize_nan_unit.lua`
 ### 2026-02-05
 - Changes:
   - AI: fix strict JSON schema (Structured Outputs) by requiring all object keys (prevents OpenAI schema validation errors).
