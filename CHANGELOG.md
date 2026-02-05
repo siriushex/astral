@@ -27,6 +27,11 @@
   - Not run (CI script update).
 ### 2026-02-05
 - Changes:
+  - Added UI warning for duplicate MPTS input URLs.
+- Tests:
+  - Not run (UI change).
+### 2026-02-05
+- Changes:
   - Added UI warning for duplicate PNR values in MPTS service list.
 - Tests:
   - Not run (UI change).
