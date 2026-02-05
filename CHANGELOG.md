@@ -12,6 +12,11 @@
 ## Entries
 ### 2026-02-05
 - Changes:
+  - Bumped UI asset version query to match build stamp (cache bust for app/styles).
+- Tests:
+  - Not run (UI-only).
+### 2026-02-05
+- Changes:
   - Startup log now includes SSL capability (helps diagnose HTTPS inputs).
 - Tests:
   - Not run (log-only).
