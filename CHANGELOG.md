@@ -12,6 +12,11 @@
 ## Entries
 ### 2026-02-05
 - Changes:
+  - UI: compact view shows warmup status on transcode tiles.
+- Tests:
+  - Not run (UI change only).
+### 2026-02-05
+- Changes:
   - UI: analyze shows GPU overload reason and GPU metrics error.
 - Tests:
   - Not run (UI change only).
