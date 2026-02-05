@@ -22,6 +22,7 @@
   - UI: hide/remove Observability AI summary block from the page (AI uses it internally).
   - UI: AstralAI chat now shows attachment previews (image thumbnails + filenames).
   - UI: AstralAI chat shows inline image thumbnails and enhanced waiting animation.
+  - UI: AstralAI chat `/help` returns local hints without calling AI.
 - Tests:
   - Not run (UI change only).
 ### 2026-02-05
