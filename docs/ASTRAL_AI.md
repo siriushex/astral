@@ -41,6 +41,11 @@
 }
 ```
 
+## Валидация входа
+- Разрешено только одно из полей: `prompt` **или** `proposed_config`.
+- `prompt` должен быть непустой строкой.
+- `proposed_config` должен быть объектом (валидируется через `config.validate_payload`).
+
 ### Phase 2 — Controlled apply
 - Apply + rollback.
 - UI панель для предпросмотра.
