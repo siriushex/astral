@@ -27,6 +27,11 @@
   - Not run (CI script update).
 ### 2026-02-05
 - Changes:
+  - Warn when PAT has multiple programs and PNR is not specified (first program selected).
+- Tests:
+  - Not run (runtime log change).
+### 2026-02-05
+- Changes:
   - Warn when requested PNR is not present in input PAT (fallback to first program).
 - Tests:
   - Not run (runtime log change).
