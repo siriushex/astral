@@ -23,8 +23,9 @@
   - UI: AstralAI chat now shows attachment previews (image thumbnails + filenames).
   - UI: AstralAI chat shows inline image thumbnails and enhanced waiting animation.
   - UI: AstralAI chat `/help` returns local hints without calling AI.
+  - AstralAI: normalize ai_api_base so trailing `/v1` is handled correctly.
 - Tests:
-  - Not run (UI change only).
+  - `./astra scripts/tests/ai_openai_url_unit.lua`
 ### 2026-02-05
 - Changes:
   - AstralAI: auto-include on-demand metrics in AI context when prompt asks for charts/metrics.
