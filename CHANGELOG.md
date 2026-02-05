@@ -15,8 +15,8 @@
   - UI Player: восстановлены ссылки `/play/<id>` и работа кнопок Open/Copy; добавлена поддержка MP2TS источника.
 - Tests:
   - Server build: `./configure.sh && make` (root@178.212.236.2:/home/hex/astra).
-  - UI (port 9000): `curl -I http://127.0.0.1:9000/index.html` (failed: connection refused).
-  - UI asset (port 9000): `curl -s http://127.0.0.1:9000/app.js | head -n 1` (failed: connection refused).
+  - UI (port 9061): `curl -I http://127.0.0.1:9061/index.html`
+  - UI asset (port 9061): `curl -s http://127.0.0.1:9061/app.js | head -n 1`
 ### 2026-02-05
 - Changes:
   - MPTS/CI: обновлён verify_mpts (UTF-8 marker, Bitrate parsing, устойчивость к префиксам логов).
