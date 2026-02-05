@@ -12,6 +12,11 @@
 ## Entries
 ### 2026-02-05
 - Changes:
+  - Release: исправлены кавычки в сборке bundle; обновлены SHA256 для ffmpeg sources.
+- Tests:
+  - Not run (CI fix).
+### 2026-02-05
+- Changes:
   - UI: hide/remove Observability AI summary block from the page (AI uses it internally).
 - Tests:
   - Not run (UI change only).
