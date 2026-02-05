@@ -112,6 +112,8 @@
 - `general.codepage` поддерживает только UTF-8 (маркер 0x15 в дескрипторах).
 - `mpts_services[].service_type_id` допускает значения 1..255 (пусто = 1).
 - `advanced.strict_pnr=true` запрещает использовать входные PAT с несколькими программами без явного `pnr`.
+- `advanced.si_interval_ms` меньше 50 игнорируется.
+- `advanced.target_bitrate <= 0` отключает CBR (значение игнорируется).
 
 ## Быстрая проверка
 ```bash

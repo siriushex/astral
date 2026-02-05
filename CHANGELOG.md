@@ -12,6 +12,12 @@
 ## Entries
 ### 2026-02-05
 - Changes:
+  - Warn when MPTS si_interval_ms < 50 or target_bitrate <= 0 (ignored).
+  - Documented MPTS advanced limits for si_interval_ms/target_bitrate.
+- Tests:
+  - Not run (config validation).
+### 2026-02-05
+- Changes:
   - Added MPTS acceptance checklist to design doc.
 - Tests:
   - Not run (docs update).
