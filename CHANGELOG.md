@@ -15,15 +15,17 @@
   - UI: expose HLS memfd storage/on-demand limits in Settings -> HLS.
   - HLS: run memfd idle sweep timer whenever memfd handler is enabled (supports per-stream memfd overrides).
 - Tests:
-  - `./configure.sh && make`
   - `tools/hls_memfd_smoke.sh`
+### 2026-02-06
+- Changes:
+  - MixAudio: modernize FFmpeg API usage to compile against current libavcodec/libavutil.
+  - MixAudio: fix module detection to always add system FFmpeg link flags (pkg-config libs).
+  - CI: install libavcodec-dev/libavutil-dev/libpq-dev so optional modules (mixaudio/postgres) build in CI.
+- Tests:
+  - `docker run --platform linux/arm64 ubuntu:24.04 ./configure.sh && make`
 ### 2026-02-06
 - Changes:
   - Tools: HLS memfd smoke now validates playlist no-cache/no-store headers (regression guard).
-- Tests:
-  - `tools/hls_memfd_smoke.sh`
-### 2026-02-06
-- Changes:
   - HLS: use strict no-cache/no-store headers for playlists (m3u8), including memfd 503 responses.
   - UI: reduce AstralAI chat polling load and show clearer retry/error status details.
 - Tests:
