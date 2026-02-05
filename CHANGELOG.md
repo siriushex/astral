@@ -12,6 +12,11 @@
 ## Entries
 ### 2026-02-05
 - Changes:
+  - UI: warmup alerts now show actionable hints.
+- Tests:
+  - Not run (UI change only).
+### 2026-02-05
+- Changes:
   - AI: force on-demand metrics (no rollup), hide UI AI summary and compute observability summary from metrics.
   - AI: Telegram command parsing now supports keys with `_` / `-` (e.g. plan_id).
   - Docs: clarify minimal-load AI defaults and auto context selection.
