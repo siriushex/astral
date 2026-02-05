@@ -12,6 +12,11 @@
 ## Entries
 ### 2026-02-06
 - Changes:
+  - HLS: use strict no-cache/no-store headers for playlists (m3u8), including memfd 503 responses.
+- Tests:
+  - `tools/hls_memfd_smoke.sh`
+### 2026-02-06
+- Changes:
   - AI: fix OpenAI retry backoff timer scoping (prevents panic on retries).
 - Tests:
   - `./astra scripts/tests/ai_openai_retry_scope_unit.lua`
