@@ -27,6 +27,11 @@
   - Not run (CI script update).
 ### 2026-02-05
 - Changes:
+  - Fixed NIT service_list parsing to read from TS loop descriptors.
+- Tests:
+  - Not run (analyzer fix).
+### 2026-02-05
+- Changes:
   - Added NIT TS list parsing (network_search) and CI assertions.
 - Tests:
   - Not run (CI script update).
