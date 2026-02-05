@@ -12,6 +12,7 @@
 ## Entries
 ### 2026-02-05
 - Changes:
+  - Added automatic contrib ffmpeg build fallback for mixaudio module when system libs are missing.
   - Enabled mixaudio and postgres module builds when dependencies are available (pkg-config/pg_config support).
 - Tests:
   - Not run (build config change).
