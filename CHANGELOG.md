@@ -12,6 +12,81 @@
 ## Entries
 ### 2026-02-05
 - Changes:
+  - Enabled mixaudio and postgres module builds when dependencies are available (pkg-config/pg_config support).
+- Tests:
+  - Not run (build config change).
+### 2026-02-05
+- Changes:
+  - Added memfd-backed HLS storage with on-demand activation and idle deactivation.
+  - Served HLS from memory via new `hls_memfd` handler (sendfile when available).
+  - Fixed memfd sendfile to use per-request offsets (safe concurrent segment fetch).
+  - Skipped expired memfd segments for new requests after idle deactivation.
+  - Enforced memfd memory limits by dropping the oldest non-busy segment (not just the head).
+  - Marked HLS discontinuity when memfd drops a non-head segment under memory pressure.
+  - Added per-stream segment lookup hash to avoid linear scans on memfd reads.
+  - Added stream lookup hash for memfd streams to speed up hls_memfd touch/lookup.
+  - Added HLS in-memory counters (`current_segments`, `current_bytes`) to stream status.
+  - Added HLS memfd settings wiring + documentation and example config.
+- Tests:
+  - Server: `./configure.sh && make` (root@178.212.236.2:/home/hex/astra).
+  - UI (port 9060): `curl -I http://127.0.0.1:9060/index.html`
+  - UI asset (port 9060): `curl -s http://127.0.0.1:9060/app.js | head -n 1`
+  - API (port 9060, cookie auth): `GET /api/v1/streams`, `GET /api/v1/settings`
+  - Metrics/health (port 9060): `GET /api/v1/metrics`, `GET /api/v1/metrics?format=prometheus`, `GET /api/v1/health/*`
+  - Config (port 9060, CSRF): `POST /api/v1/config/validate`, `POST /api/v1/reload`
+  - Export (port 9060): `GET /api/v1/export?include_users=0`
+  - Export CLI: `./astra scripts/export.lua --data-dir ./data --output ./astra-export.json`
+  - HLS memfd on-demand (port 9027): playlist/segment fetch + idle deactivate log + no files in hls_dir.
+  - HLS HTTP Play (port 9026): `fixtures`-style smoke for cache headers + playlist/segment.
+  - HLS memfd load sanity (dynamic port): 10 clients playlist/segment + stream-status counters.
+  - HLS memfd idle (port 9030): old segment returns 404 after idle deactivation.
+  - HLS memfd mem-limit drop (port 9031): drop log appears while a segment is busy.
+  - HLS memfd hash lookup (port 9032): playlist/segment fetch returns 200.
+### 2026-02-05
+- Changes:
+  - Added `docs/API.md` with current API reference.
+  - Added `ai_context` unit test.
+  - Added AI context UI options for include logs/CLI.
+  - Persisted AI Summary context options in UI.
+  - Skipped AI log reads when retention is disabled (low‑load).
+  - Added `docs/CLI.md` with CLI modes and examples.
+  - Added curl examples for AI context parameters.
+  - Expanded AI context API test to include analyze/femon inputs.
+  - Fixed AI plan audit logging scope (log_audit now local in runtime).
+  - Linked API/CLI/AstralAI docs in README.
+  - Added AI context curl examples to AstralAI doc; noted CLI timeout requirement.
+  - Added AstralAI test list to docs/TESTING.md.
+  - Clarified stream/dvbls context sources (runtime/module for low‑load).
+- Tests:
+  - `./astra scripts/tests/ai_context_unit.lua`
+  - `./astra scripts/tests/ai_context_cli_unit.lua`
+  - `./astra scripts/tests/ai_runtime_context_unit.lua`
+  - `./astra scripts/tests/ai_context_api_unit.lua`
+  - `./astra scripts/tests/ai_plan_context_unit.lua`
+### 2026-02-05
+- Changes:
+  - Added `ai_context.lua` to collect AI context from logs and CLI snapshots on demand.
+  - Wired `/api/v1/ai/summary` to accept `include_logs` and `include_cli` params (stream/analyze/dvbls/femon).
+  - Extended AI summary prompt with optional context payload (logs + CLI).
+  - Added Observability UI controls for AI context (logs + CLI inputs).
+  - Documented AI CLI context settings in `docs/ASTRAL_AI.md`.
+- Tests:
+  - Not run (UI + API wiring only).
+### 2026-02-05
+- Changes:
+  - Added `ai_openai_client.lua` with centralized retries/backoff and rate-limit parsing.
+  - Added `ai_charts.lua` and wired Telegram charts through it.
+  - Added Observability “AI Summary” block (UI + `/api/v1/ai/summary?ai=1`).
+  - Implemented Telegram `/ai` commands (summary/report/suggest/apply).
+  - Added AI guardrails for destructive apply and `ai_change` audit event.
+  - Added AI summary + charts unit tests.
+  - Documented performance-first rule (min CPU/RAM/IO) in development guidelines.
+  - Added on-demand AI metrics (logs + runtime snapshot) to avoid background rollup load.
+  - Added on-demand metrics caching (TTL) to reduce repeated runtime scans.
+- Tests:
+  - Not run (unit files added only).
+### 2026-02-05
+- Changes:
   - Added observability data tables and rollup timers for AI logs/metrics.
   - Added AI observability API endpoints: `/api/v1/ai/logs`, `/api/v1/ai/metrics`, `/api/v1/ai/summary`.
   - Added Settings → General controls for observability retention + rollup interval.
