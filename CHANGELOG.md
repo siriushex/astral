@@ -74,6 +74,18 @@
   - Not run (CI/doc updates; covered by CI).
 ### 2026-02-05
 - Changes:
+  - MPTS: не отправляет пустые PSI (PAT/SDT/NIT), если все сервисы отклонены (spts_only/strict_pnr).
+  - Runtime: validate_stream_config больше не падает, когда MPTS stream не имеет поля input.
+  - Fixtures: mpts_spts_only output URL исправлен (Astral URL options не парсятся через `?`).
+- Tests:
+  - `contrib/ci/smoke_mpts.sh`
+  - `contrib/ci/smoke_mpts_pid_collision.sh`
+  - `contrib/ci/smoke_mpts_pass_tables.sh`
+  - `contrib/ci/smoke_mpts_strict_pnr.sh`
+  - `contrib/ci/smoke_mpts_spts_only.sh`
+  - `contrib/ci/smoke_mpts_auto_probe.sh`
+### 2026-02-05
+- Changes:
   - Release: исправлены кавычки в сборке bundle; обновлены SHA256 для ffmpeg sources.
   - Release: корректное определение версии из version.h для имени bundle (без падения при отсутствии ASTRA_VERSION).
   - CI: check_changelog учитывает shallow clone и подтягивает merge-base.
