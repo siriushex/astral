@@ -12,6 +12,11 @@
 ## Entries
 ### 2026-02-05
 - Changes:
+  - Added strict PNR smoke test and fixture (multi-program PAT generator).
+- Tests:
+  - Not run (new CI script).
+### 2026-02-05
+- Changes:
   - tools/gen_spts.py: added optional extra program fields to generate multi-program PAT for tests.
 - Tests:
   - Not run (test utility update).
