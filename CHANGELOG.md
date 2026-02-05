@@ -37,6 +37,11 @@
   - Not run (UI text update).
 ### 2026-02-05
 - Changes:
+  - Added MPTS lint warnings for unsupported delivery types and missing DVB-C fields.
+- Tests:
+  - Not run (lint-only).
+### 2026-02-05
+- Changes:
   - Added MPTS lint warnings for missing services, duplicate inputs/PNR, and pass_* with multi-service.
 - Tests:
   - Not run (lint-only).
