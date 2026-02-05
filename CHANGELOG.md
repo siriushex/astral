@@ -12,6 +12,11 @@
 ## Entries
 ### 2026-02-05
 - Changes:
+  - Added NIT TS list parsing (network_search) and CI assertions.
+- Tests:
+  - Not run (CI script update).
+### 2026-02-05
+- Changes:
   - Added PAT NIT PID assertion to MPTS verify and CI.
 - Tests:
   - Not run (CI script update).
