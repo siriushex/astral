@@ -12,6 +12,11 @@
 ## Entries
 ### 2026-02-05
 - Changes:
+  - Wire MPTS `cat_version` from config into mux options.
+- Tests:
+  - Not run (config wiring).
+### 2026-02-05
+- Changes:
   - Log when MPTS PCR restamp is enabled.
 - Tests:
   - Not run (log change).
