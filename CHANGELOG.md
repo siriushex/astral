@@ -12,6 +12,12 @@
 ## Entries
 ### 2026-02-05
 - Changes:
+  - Added View menu toggle to show/hide disabled streams.
+  - Updated UI build stamp and asset version to 20260205p.
+- Tests:
+  - Not run (UI-only).
+### 2026-02-05
+- Changes:
   - Bumped UI asset version query to match build stamp (cache bust for app/styles).
 - Tests:
   - Not run (UI-only).
