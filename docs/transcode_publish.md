@@ -52,6 +52,11 @@
 - `udp`, `rtp` (in-process udp_output от внутренней шины)
 - `embed` (включает удобную страницу `/embed/<stream_id>`; для воспроизведения требуется `hls`)
 
+Примечание про `dash`:
+- multi-variant DASH (несколько video representations) по умолчанию включается только в **economical** режиме (`process_per_output: false`).
+- В per-profile режиме (reliable) для стабильности по умолчанию пакуется только первый variant.
+- Принудительно можно включить/выключить через `transcode.dash_multi_variant: true|false`.
+
 Пример:
 
 ```json
