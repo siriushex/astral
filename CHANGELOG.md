@@ -12,6 +12,12 @@
 ## Entries
 ### 2026-02-06
 - Changes:
+  - HLS memfd: fix invalid `#EXTINF` duration formatting in playlists (was emitting `.3f` due to limited formatter).
+  - Tools: HLS memfd smoke now validates EXTINF duration format (regression guard).
+- Tests:
+  - Not run locally (covered in CI: `tools/hls_memfd_smoke.sh`).
+### 2026-02-06
+- Changes:
   - UI: warn when HTTP Play HLS is enabled but HLS storage is set to disk (common source of high disk I/O); add one-click preset to switch to memfd + on-demand defaults.
   - Streams: log a one-time warning when `http_play_hls=true` uses disk storage (suggest `hls_storage=memfd`) to reduce disk I/O surprises.
 - Tests:
