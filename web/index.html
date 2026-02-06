@@ -2209,13 +2209,14 @@
 	              <span>Publish targets (JSON)</span>
 	              <textarea id="stream-transcode-publish-json" class="textarea-grow" rows="5" placeholder='[{"type":"hls","variants":["HDHigh","HDMedium"]}]'></textarea>
 	            </label>
-	            <div class="form-hint">
-	              Internal pull endpoints are always available when ladder is running:
-	              <code>/live/&lt;stream_id&gt;~&lt;profile_id&gt;.ts</code>,
-	              <code>/hls/&lt;stream_id&gt;/index.m3u8</code>,
-	              <code>/dash/&lt;stream_id&gt;/manifest.mpd</code>.
-	            </div>
-	          </div>
+		            <div class="form-hint">
+		              Internal pull endpoints are always available when ladder is running:
+		              <code>/live/&lt;stream_id&gt;~&lt;profile_id&gt;.ts</code>,
+		              <code>/hls/&lt;stream_id&gt;/index.m3u8</code>,
+		              <code>/dash/&lt;stream_id&gt;/manifest.mpd</code>,
+		              <code>/embed/&lt;stream_id&gt;</code>.
+		            </div>
+		          </div>
 
 	          <details class="fold">
 	            <summary class="fold-summary">FFmpeg args</summary>
