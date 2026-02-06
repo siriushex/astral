@@ -12,6 +12,12 @@
 ## Entries
 ### 2026-02-06
 - Changes:
+  - AI Chat: add `delete all disable channel` command chip to purge all disabled streams (no OpenAI call).
+  - API: add admin endpoint `POST /api/v1/streams/purge-disabled` (snapshot-safe config change).
+- Tests:
+  - `./configure.sh && make`
+### 2026-02-06
+- Changes:
   - UI Player: always show both links `Play` (`/play/<id>`) and `HLS` (`/hls/<id>/index.m3u8`), and display the selected URL in the header (instead of the UDP active input).
   - UI Player: improve HLS robustness (retries for on-demand 503, better error messages, and video-only fallback on decode/not-supported errors).
   - Preview: when `http_play_hls=true`, `preview/start` returns direct `/hls/<id>/index.m3u8` without starting a preview session.
