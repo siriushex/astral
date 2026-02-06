@@ -643,6 +643,11 @@ local function escape_xml(value)
     return text
 end
 
+local function escape_html(value)
+    -- escape_xml already escapes the critical HTML characters (& < > " ')
+    return escape_xml(value)
+end
+
 local function request_base_url(request, opts)
     if not request or not request.headers then
         return ""
