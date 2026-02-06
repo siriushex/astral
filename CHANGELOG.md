@@ -12,6 +12,11 @@
 ## Entries
 ### 2026-02-06
 - Changes:
+  - Transcode: seamless UDP proxy cutover can complete even when only standby sender exists (prevents cutover timeouts when primary dies early).
+- Tests:
+  - `contrib/ci/smoke_transcode_seamless_failover.sh` (Ubuntu servers).
+### 2026-02-06
+- Changes:
   - Repo: ignore macOS `.DS_Store` and remove accidentally tracked file.
 - Tests:
   - Not run.
