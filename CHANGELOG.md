@@ -12,6 +12,11 @@
 ## Entries
 ### 2026-02-06
 - Changes:
+  - Transcode API: expose `publish_hls_variants` in transcode status (list of published HLS variant PIDs, if present).
+- Tests:
+  - Not run locally (covered by CI).
+### 2026-02-06
+- Changes:
   - UI: add `ui_polling_interval_sec` (Settings -> General: "Polling") to control Dashboard status/bitrate refresh; on page load it polls every ~2s for ~30s then ramps to the selected interval.
   - UI: fix view naming defaults so polling follows the active tabs (`dashboard`, `logs`) without requiring a manual re-open.
   - Transcode: improve late-joiner compatibility (repeat SPS/PPS on keyframes, resend TS headers, and set MP4 codec tags for DASH stream-copy).
