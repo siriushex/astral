@@ -20,6 +20,21 @@ ExecStart=/opt/astra/astra scripts/server.lua --config ${ASTRA_CONFIG} \
   -p ${ASTRA_HTTP_PORT} --data-dir ${ASTRA_DATA_DIR} --web-dir ${ASTRA_WEB_DIR}
 ```
 
+## Runtime Dependencies (Ubuntu/Debian)
+If you deploy a prebuilt binary to a clean server, you may be missing runtime
+libraries or external tools (for example `ffmpeg`).
+
+Installer (idempotent):
+```
+sudo ./install.sh --bin /opt/astra/astra
+```
+
+Notes:
+- The script checks missing shared libraries via `ldd` and installs matching `apt` packages.
+- If the binary requires legacy `libssl.so.1.1` on Ubuntu 22.04+, it will download and
+  install `libssl1.1` from official Ubuntu archives (fallback).
+- You can skip `ffmpeg` installation with `--no-ffmpeg`.
+
 ## Watchdog (CPU/RAM)
 The watchdog restarts the process if it exceeds CPU or RSS thresholds for
 several consecutive checks.
