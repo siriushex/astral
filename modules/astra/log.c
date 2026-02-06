@@ -42,6 +42,8 @@
 #include <astra.h>
 
 static bool is_debug = false;
+static size_t rotate_max_size = 0;
+static int rotate_keep = 0;
 
 static int lua_log_set(lua_State *L)
 {
@@ -66,6 +68,19 @@ static int lua_log_set(lua_State *L)
             lua_pushvalue(lua, -1);
             lua_setglobal(lua, "debug");
         }
+        else if(!strcmp(var, "level"))
+        {
+            const char *val = luaL_checkstring(L, -1);
+            int level = ASC_LOG_LEVEL_INFO;
+            if(!strcasecmp(val, "error")) level = ASC_LOG_LEVEL_ERROR;
+            else if(!strcasecmp(val, "warning") || !strcasecmp(val, "warn")) level = ASC_LOG_LEVEL_WARNING;
+            else if(!strcasecmp(val, "info")) level = ASC_LOG_LEVEL_INFO;
+            else if(!strcasecmp(val, "debug")) level = ASC_LOG_LEVEL_DEBUG;
+            asc_log_set_level(level);
+            is_debug = asc_log_is_debug();
+            lua_pushboolean(lua, is_debug);
+            lua_setglobal(lua, "debug");
+        }
         else if(!strcmp(var, "filename"))
         {
             const char *val = luaL_checkstring(L, -1);
@@ -87,6 +102,20 @@ static int lua_log_set(lua_State *L)
         {
             luaL_checktype(L, -1, LUA_TBOOLEAN);
             asc_log_set_color(lua_toboolean(L, -1));
+        }
+        else if(!strcmp(var, "rotate_max_bytes"))
+        {
+            const lua_Number val = luaL_checknumber(L, -1);
+            double num = (double)val;
+            if(num < 0) num = 0;
+            rotate_max_size = (size_t)num;
+            asc_log_set_rotate(rotate_max_size, rotate_keep);
+        }
+        else if(!strcmp(var, "rotate_keep"))
+        {
+            const int val = (int)luaL_checkinteger(L, -1);
+            rotate_keep = (val > 0) ? val : 0;
+            asc_log_set_rotate(rotate_max_size, rotate_keep);
         }
     }
 

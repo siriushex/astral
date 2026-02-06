@@ -23,28 +23,38 @@
 #ifndef _WIN32
 #include <syslog.h>
 #endif
+#include <sys/stat.h>
+#include <stdlib.h>
 #include <stdarg.h>
 
 static struct
 {
     int fd;
     bool color;
-    bool debug;
     bool sout;
     char *filename;
 #ifndef _WIN32
     char *syslog;
 #endif
+    int level;
+    size_t rotate_max_size;
+    int rotate_keep;
+    size_t file_size;
+    time_t rotate_last_fail;
 } __log =
 {
     0,
-    false,
     false,
     true,
     NULL,
 #ifndef _WIN32
     NULL,
 #endif
+    ASC_LOG_LEVEL_INFO,
+    0,
+    0,
+    0,
+    0,
 };
 
 enum
@@ -80,6 +90,20 @@ static const char * _get_type_str(int type)
         default: return "UNKNOWN";
     }
 }
+
+static int _get_type_level(int type)
+{
+    switch(type & 0x000000FF)
+    {
+        case LOG_TYPE_WARNING: return ASC_LOG_LEVEL_WARNING;
+        case LOG_TYPE_INFO: return ASC_LOG_LEVEL_INFO;
+        case LOG_TYPE_DEBUG: return ASC_LOG_LEVEL_DEBUG;
+        case LOG_TYPE_ERROR:
+        default: return ASC_LOG_LEVEL_ERROR;
+    }
+}
+
+static void _rotate_files(void);
 
 __fmt_printf(2, 0)
 static void _log(int type, const char *msg, va_list ap)
@@ -129,12 +153,30 @@ static void _log(int type, const char *msg, va_list ap)
             fprintf(stderr, "[log] failed to write to the stdout [%s]\n", strerror(errno));
     }
 
-    if(__log.fd && write(__log.fd, buffer, len_2) == -1)
-        fprintf(stderr, "[log] failed to write to the file [%s]\n", strerror(errno));
+    if(__log.fd > 1)
+    {
+        const ssize_t r = write(__log.fd, buffer, len_2);
+        if(r == -1)
+        {
+            fprintf(stderr, "[log] failed to write to the file [%s]\n", strerror(errno));
+        }
+        else
+        {
+            __log.file_size += (size_t)r;
+            if(__log.rotate_max_size > 0
+                && __log.rotate_keep > 0
+                && __log.file_size >= __log.rotate_max_size)
+            {
+                _rotate_files();
+            }
+        }
+    }
 }
 
 void asc_log_info(const char *msg, ...)
 {
+    if(__log.level < _get_type_level(LOG_TYPE_INFO))
+        return;
     va_list ap;
     va_start(ap, msg);
     _log(LOG_TYPE_INFO, msg, ap);
@@ -143,6 +185,8 @@ void asc_log_info(const char *msg, ...)
 
 void asc_log_error(const char *msg, ...)
 {
+    if(__log.level < _get_type_level(LOG_TYPE_ERROR))
+        return;
     va_list ap;
     va_start(ap, msg);
     _log(LOG_TYPE_ERROR, msg, ap);
@@ -151,6 +195,8 @@ void asc_log_error(const char *msg, ...)
 
 void asc_log_warning(const char *msg, ...)
 {
+    if(__log.level < _get_type_level(LOG_TYPE_WARNING))
+        return;
     va_list ap;
     va_start(ap, msg);
     _log(LOG_TYPE_WARNING, msg, ap);
@@ -159,7 +205,7 @@ void asc_log_warning(const char *msg, ...)
 
 void asc_log_debug(const char *msg, ...)
 {
-    if(!__log.debug)
+    if(__log.level < _get_type_level(LOG_TYPE_DEBUG))
         return;
 
     va_list ap;
@@ -170,7 +216,7 @@ void asc_log_debug(const char *msg, ...)
 
 bool asc_log_is_debug(void)
 {
-    return __log.debug;
+    return __log.level >= ASC_LOG_LEVEL_DEBUG;
 }
 
 void asc_log_hup(void)
@@ -179,10 +225,14 @@ void asc_log_hup(void)
     {
         close(__log.fd);
         __log.fd = 0;
+        __log.file_size = 0;
     }
 
     if(!__log.filename)
+    {
+        __log.file_size = 0;
         return;
+    }
 
     __log.fd = open(__log.filename, O_WRONLY | O_CREAT | O_APPEND
 #ifndef _WIN32
@@ -194,9 +244,69 @@ void asc_log_hup(void)
     if(__log.fd == -1)
     {
         __log.fd = 0;
+        __log.file_size = 0;
         __log.sout = true;
         asc_log_error("[core/log] failed to open %s (%s)", __log.filename, strerror(errno));
+        return;
     }
+
+    struct stat st;
+    if(fstat(__log.fd, &st) == 0)
+        __log.file_size = (size_t)st.st_size;
+    else
+        __log.file_size = 0;
+}
+
+static void _rotate_files(void)
+{
+    if(!__log.filename || __log.rotate_max_size == 0 || __log.rotate_keep <= 0)
+        return;
+    if(__log.fd <= 1)
+        return;
+
+    const time_t now = time(NULL);
+    if(__log.rotate_last_fail != 0 && (now - __log.rotate_last_fail) < 60)
+        return;
+
+    close(__log.fd);
+    __log.fd = 0;
+    __log.file_size = 0;
+
+    const size_t base_len = strlen(__log.filename);
+    const size_t buf_len = base_len + 32;
+    char *old_name = malloc(buf_len);
+    char *new_name = malloc(buf_len);
+    if(!old_name || !new_name)
+    {
+        if(old_name) free(old_name);
+        if(new_name) free(new_name);
+        asc_log_hup();
+        return;
+    }
+
+    // Shift: file.(keep-1) -> file.keep, ..., file.1 -> file.2
+    for(int i = __log.rotate_keep - 1; i >= 1; --i)
+    {
+        snprintf(old_name, buf_len, "%s.%d", __log.filename, i);
+        snprintf(new_name, buf_len, "%s.%d", __log.filename, i + 1);
+        (void)rename(old_name, new_name);
+    }
+
+    // Current -> file.1
+    snprintf(new_name, buf_len, "%s.1", __log.filename);
+    if(rename(__log.filename, new_name) == -1)
+    {
+        __log.rotate_last_fail = now;
+        fprintf(stderr, "[log] rotate failed: %s (%s)\n", __log.filename, strerror(errno));
+    }
+    else
+    {
+        __log.rotate_last_fail = 0;
+    }
+
+    free(old_name);
+    free(new_name);
+    asc_log_hup();
 }
 
 void asc_log_core_destroy(void)
@@ -217,8 +327,12 @@ void asc_log_core_destroy(void)
 #endif
 
     __log.color = false;
-    __log.debug = false;
     __log.sout = true;
+    __log.level = ASC_LOG_LEVEL_INFO;
+    __log.rotate_max_size = 0;
+    __log.rotate_keep = 0;
+    __log.file_size = 0;
+    __log.rotate_last_fail = 0;
     if(__log.filename)
     {
         free(__log.filename);
@@ -233,7 +347,19 @@ void asc_log_set_stdout(bool val)
 
 void asc_log_set_debug(bool val)
 {
-    __log.debug = val;
+    if(val)
+        __log.level = ASC_LOG_LEVEL_DEBUG;
+    else if(__log.level >= ASC_LOG_LEVEL_DEBUG)
+        __log.level = ASC_LOG_LEVEL_INFO;
+}
+
+void asc_log_set_level(int val)
+{
+    if(val < ASC_LOG_LEVEL_ERROR)
+        val = ASC_LOG_LEVEL_ERROR;
+    if(val > ASC_LOG_LEVEL_DEBUG)
+        val = ASC_LOG_LEVEL_DEBUG;
+    __log.level = val;
 }
 
 void asc_log_set_color(bool val)
@@ -253,6 +379,14 @@ void asc_log_set_file(const char *val)
         __log.filename = strdup(val);
 
     asc_log_hup();
+}
+
+void asc_log_set_rotate(size_t max_size, int keep)
+{
+    __log.rotate_max_size = max_size;
+    __log.rotate_keep = (keep > 0) ? keep : 0;
+    if(__log.rotate_keep == 0)
+        __log.rotate_max_size = 0;
 }
 
 #ifndef _WIN32
