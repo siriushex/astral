@@ -19,6 +19,13 @@
   - `./configure.sh && make`
 ### 2026-02-06
 - Changes:
+  - UI Player: "Open in new tab" now opens a self-contained UI URL (`/index.html#player=<id>&kind=...`) so playback works in a new tab (instead of opening raw `/play`/`/hls`).
+  - Preview: return `409 stream offline` when the input is already running and has failures, to avoid infinite buffering in the player.
+  - CI: add `preview_offline_unit` and run it in `contrib/ci/smoke_preview.sh`.
+- Tests:
+  - `contrib/ci/smoke_preview.sh`
+### 2026-02-06
+- Changes:
   - UI Player: always show both links `Play` (`/play/<id>`) and `HLS` (`/hls/<id>/index.m3u8`), and display the selected URL in the header (instead of the UDP active input).
   - UI Player: improve HLS robustness (retries for on-demand 503, better error messages, and fallbacks: `audio_aac` then video-only on decode/not-supported errors).
   - Preview: when `http_play_hls=true`, `preview/start` returns direct `/hls/<id>/index.m3u8` without starting a preview session.
