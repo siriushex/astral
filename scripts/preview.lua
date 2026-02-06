@@ -218,7 +218,8 @@ local function build_local_play_url(stream_id)
     if not play_port or play_port == 0 then
         play_port = http_port
     end
-    return "http://127.0.0.1:" .. tostring(play_port) .. "/play/" .. tostring(stream_id)
+    -- internal=1: localhost ffmpeg может читать /play даже при включённом http_auth (см. http_auth_check()).
+    return "http://127.0.0.1:" .. tostring(play_port) .. "/play/" .. tostring(stream_id) .. "?internal=1"
 end
 
 local function start_ffmpeg_hls_video_only(token, stream_id)

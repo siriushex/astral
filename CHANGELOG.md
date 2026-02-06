@@ -13,10 +13,13 @@
 ### 2026-02-06
 - Changes:
   - UI Player: always show both links `Play` (`/play/<id>`) and `HLS` (`/hls/<id>/index.m3u8`), and display the selected URL in the header (instead of the UDP active input).
-  - UI Player: improve HLS robustness (retries for on-demand 503, better error messages, and video-only fallback on decode/not-supported errors).
+  - UI Player: improve HLS robustness (retries for on-demand 503, better error messages, and fallbacks: `audio_aac` then video-only on decode/not-supported errors).
   - Preview: when `http_play_hls=true`, `preview/start` returns direct `/hls/<id>/index.m3u8` without starting a preview session.
+  - Preview: add `audio_aac` preview profile (ffmpeg: `-c:v copy`, `-c:a aac`) and use `/play/<id>?internal=1` for localhost ffmpeg to bypass `http_auth`.
+  - API: support `audio_aac=1` for `POST /api/v1/streams/:id/preview/start`.
 - Tests:
   - `contrib/ci/smoke_preview.sh`
+  - `./astral scripts/tests/preview_audio_aac_unit.lua`
 ### 2026-02-06
 - Changes:
   - JSON: support `\\uXXXX` (incl. surrogate pairs) and `\\b`/`\\f` escapes, plus exponent numbers (improves OpenAI Responses parsing reliability).

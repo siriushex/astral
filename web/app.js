@@ -212,6 +212,7 @@ const state = {
   playerShareKind: 'play',
   playerToken: null,
   playerTriedVideoOnly: false,
+  playerTriedAudioAac: false,
   playerStartTimer: null,
   playerStarting: false,
   analyzeJobId: null,
@@ -14613,7 +14614,7 @@ function ensureHlsJsLoaded() {
   if (window.Hls) return Promise.resolve();
   if (hlsJsPromise) return hlsJsPromise;
   // Загружаем локальный vendor только по требованию (не тянем CDN в проде).
-  const src = `/vendor/hls.min.js?v=20260206f`;
+  const src = `/vendor/hls.min.js?v=20260206g`;
   hlsJsPromise = loadScriptOnce(src, 'hlsjs').catch((err) => {
     hlsJsPromise = null;
     throw err;
