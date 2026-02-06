@@ -18,6 +18,19 @@
   - Not run locally (covered in CI: `tools/hls_memfd_smoke.sh`).
 ### 2026-02-06
 - Changes:
+  - MPTS: UI: make MPTS tab actionable when disabled (callout + click-to-manual) and add tools to build service list faster (Convert inputs / Add from streams).
+  - MPTS: DVB hardening: CAT multi-section (large CA lists no longer truncate).
+  - MPTS: TOT: add `advanced.disable_tot` (TDT only), `general.dst.*` (time_of_change/next_offset) and treat `general.utc_offset` as minutes with hours compatibility.
+  - MPTS: EIT pass-through: add `advanced.eit_table_ids` filter (table_id allowlist/ranges).
+  - MPTS: SDT/NIT: add DVB charset marker prefixes for `general.codepage` (limited ISO-8859 set + UTF-8).
+  - Tools/CI: extend `tools/gen_spts.py` to emit multiple EIT table_ids; add `EXPECT_NO_TOT` to verifier; add new MPTS smokes.
+- Tests:
+  - `./configure.sh && make`
+  - `contrib/ci/smoke_mpts_tot_disable.sh`
+  - `contrib/ci/smoke_mpts_eit_mask.sh`
+  - `contrib/ci/smoke_mpts_cat_multisection.sh`
+### 2026-02-06
+- Changes:
   - UI: warn when HTTP Play HLS is enabled but HLS storage is set to disk (common source of high disk I/O); add one-click preset to switch to memfd + on-demand defaults.
   - Streams: log a one-time warning when `http_play_hls=true` uses disk storage (suggest `hls_storage=memfd`) to reduce disk I/O surprises.
 - Tests:
