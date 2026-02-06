@@ -23,6 +23,11 @@
   - `contrib/ci/smoke_mpts_cat.sh`
 ### 2026-02-06
 - Changes:
+  - UI: add Save buttons for HLS/HTTP Play/HTTP Auth settings (persist without restart) and autosave HTTP Play access toggles.
+- Tests:
+  - Not run (UI change only).
+### 2026-02-06
+- Changes:
   - UI: add compact mode toggle for Settings -> General cards.
 - Tests:
   - Not run (UI change only).
