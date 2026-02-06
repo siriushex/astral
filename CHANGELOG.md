@@ -30,6 +30,11 @@
   - Local integration: enabled-only adapter PUT preserves adapter config fields (export unchanged).
 ### 2026-02-06
 - Changes:
+  - Docs: update `docs/API.md` with health auth rules, `POST /mpts/scan`, and enabled-only patch notes for streams/adapters.
+- Tests:
+  - Not run (docs change only).
+### 2026-02-06
+- Changes:
   - UI: add Save buttons for HLS/HTTP Play/HTTP Auth settings (persist without restart) and autosave HTTP Play access toggles.
 - Tests:
   - Not run (UI change only).

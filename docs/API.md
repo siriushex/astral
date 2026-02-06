@@ -1,11 +1,31 @@
 # Astral API (v1)
 
 Base URL: `http://<host>:<port>/api/v1`  
-Формат: JSON (кроме XML/Prometheus/HTML, где явно указано).
+Формат: JSON (кроме случаев, где явно указано: XML/Prometheus/text).
+
+## Общие правила
+- Все пути ниже указаны относительно Base URL. Пример: `GET /health` -> `GET /api/v1/health`.
+- Почти все эндпоинты требуют сессию (Bearer или cookie). Исключения:
+  - `POST /auth/login`
+  - `POST /auth/logout` (идемпотентный)
+  - `GET /health`
+  - `OPTIONS *`
+- Ошибки обычно возвращаются как `{ "error": "<message>" }` с соответствующим HTTP кодом.
 
 ## Auth
-- `POST /auth/login` → `{ token, user{ id, username, is_admin } }`
-- `POST /auth/logout`
+### `POST /auth/login`
+Body:
+```json
+{ "username": "admin", "password": "admin" }
+```
+Response:
+```json
+{ "token": "<token>", "user": { "id": 1, "username": "admin", "is_admin": 1 } }
+```
+Также устанавливает cookie `astra_session=<token>`.
+
+### `POST /auth/logout`
+Идемпотентный logout. Если сессия существует, удаляет её. Можно вызывать с Bearer или cookie.
 
 **Способы авторизации**
 - `Authorization: Bearer <token>`  
@@ -13,10 +33,16 @@ Base URL: `http://<host>:<port>/api/v1`
 
 **CSRF**
 - Для `POST/PUT/DELETE/PATCH` с cookie‑auth нужен `X-CSRF-Token: <session token>`.
+- Для Bearer‑auth CSRF не требуется.
 
-## Health (без auth)
+## Health
+### Без auth
 - `GET /health`
+
+### Требует auth
 - `GET /health/process`
+- `GET /health/inputs`
+- `GET /health/outputs`
 
 ## Streams
 - `GET /streams`
@@ -24,6 +50,17 @@ Base URL: `http://<host>:<port>/api/v1`
 - `GET /streams/{id}`
 - `PUT /streams/{id}`
 - `DELETE /streams/{id}`
+- `POST /streams/{id}/preview/start`
+- `POST /streams/{id}/preview/stop`
+- `POST /streams/analyze`
+- `POST /streams/{id}/analyze`
+- `GET /streams/analyze/{id}`
+
+**Upsert формы (совместимость)**
+- Рекомендуемый формат: `{ "id": "...", "enabled": true|false, "config": { ... } }`.
+- Legacy формат: тело запроса может быть самим stream config (поля на верхнем уровне), `id` берётся из URL или body.
+- `enabled-only patch`: `PUT /streams/{id}` с телом `{ "enabled": false }` (или `{ "enabled": true }`) не требует `config` и не затирает существующий config.
+- Для update: если `enabled` не передан, текущее значение `enabled` сохраняется (защита от случайного re-enable).
 
 ## Adapters
 - `GET /adapters`
@@ -32,11 +69,20 @@ Base URL: `http://<host>:<port>/api/v1`
 - `PUT /adapters/{id}`
 - `DELETE /adapters/{id}`
 
+**Upsert формы (совместимость)**
+- Рекомендуемый формат: `{ "id": "...", "enabled": true|false, "config": { ... } }`.
+- Legacy формат: тело запроса может быть самим adapter config (поля на верхнем уровне), `id` берётся из URL или body.
+- `enabled-only patch`: `PUT /adapters/{id}` с телом `{ "enabled": false }` (или `{ "enabled": true }`) не требует `config` и не затирает существующий config.
+- Для update: если `enabled` не передан, текущее значение `enabled` сохраняется (защита от случайного re-enable).
+
 ## Status
 - `GET /stream-status`
 - `GET /stream-status/{id}`
 - `GET /adapter-status`
 - `GET /adapter-status/{id}`
+
+## MPTS
+- `POST /mpts/scan`
 
 ## DVB
 - `GET /dvb-adapters`
@@ -121,7 +167,7 @@ Base URL: `http://<host>:<port>/api/v1`
 - `POST /config/revisions/{id}/restore`
 - `DELETE /config/revisions/{id}`
 - `POST /import` (merge|replace)
-- `GET /export`
+- `GET /export` (admin)
 
 ## Settings
 - `GET /settings` (секреты маскированы)
