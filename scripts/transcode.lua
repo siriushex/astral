@@ -4797,17 +4797,23 @@ local function build_publish_ffmpeg_argv(job, worker)
         "-loglevel", "warning",
     }
 
-    if t == "dash" then
-        local variants = type(worker.variants) == "table" and worker.variants or {}
-        if #variants == 0 then
-            return nil, "publish variants required"
-        end
-        if #variants > 1 and not normalize_bool(tc.dash_multi_variant, false) then
-            -- Multi-variant DASH requires tight ABR alignment (keyframe grid + timestamps).
-            -- In Phase 3 MVP we default to the first variant to keep DASH publish stable.
-            worker.variants_original = variants
-            variants = { variants[1] }
-        end
+	    if t == "dash" then
+	        local variants = type(worker.variants) == "table" and worker.variants or {}
+	        if #variants == 0 then
+	            return nil, "publish variants required"
+	        end
+	        local allow_multi_variant = normalize_bool(tc.dash_multi_variant, nil)
+	        if allow_multi_variant == nil then
+	            -- Default: multi-variant DASH is reliable only when we encode all profiles in a single
+	            -- ffmpeg process (economical mode). Per-profile mode may drift on segment boundaries.
+	            allow_multi_variant = job and job.ladder_single_process == true
+	        end
+	        if #variants > 1 and not allow_multi_variant then
+	            -- Multi-variant DASH requires tight ABR alignment (keyframe grid + timestamps).
+	            -- In Phase 3 MVP we default to the first variant to keep DASH publish stable.
+	            worker.variants_original = variants
+	            variants = { variants[1] }
+	        end
 
         local base = (config and config.data_dir) and config.data_dir or "./data"
         local out_dir = worker.dash_dir or (base .. "/dash/" .. tostring(job.id))
