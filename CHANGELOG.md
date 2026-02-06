@@ -19,6 +19,11 @@
   - `contrib/ci/smoke_preview.sh`
 ### 2026-02-06
 - Changes:
+  - AI: when the outer OpenAI Responses JSON is invalid, extract `output_text` directly from the raw body to keep chat working behind flaky proxies.
+- Tests:
+  - `./astral scripts/tests/ai_openai_raw_output_extract_unit.lua`
+### 2026-02-06
+- Changes:
   - AI: harden OpenAI proxy response decoding (scrub/salvage JSON) and fall back to the next model when a proxy returns invalid JSON.
 - Tests:
   - `./astral scripts/tests/ai_openai_invalid_json_fallback_unit.lua`
