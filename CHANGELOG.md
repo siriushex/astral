@@ -27,7 +27,7 @@
   - UI: validate softcam references on stream save and show test results even when softcam test returns errors with stats.
   - Softcam: ignore empty key/caid in settings and require non-empty host/user/pass to avoid newcamd aborts.
   - Config: enable SQLite WAL + busy timeout to reduce `database is locked` aborts.
-  - UI: bump asset version stamp to `20260207d` to ensure browsers pick up the latest Softcam UI updates.
+  - UI: bump asset version stamp to `20260207e` to ensure browsers pick up the latest UI updates.
 - Tests:
   - Not run (softcam validation + sqlite pragmas + UI updates).
 ### 2026-02-07
