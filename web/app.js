@@ -18856,6 +18856,22 @@ async function sendAiChatMessage() {
     }
     return;
   }
+  if (
+    normalized === 'update channel names' ||
+    normalized === 'update channel names sdt' ||
+    normalized === 'update names' ||
+    normalized === 'update names sdt'
+  ) {
+    elements.aiChatInput.value = '';
+    appendAiChatMessage('user', prompt);
+    appendAiChatMessage('assistant', buildUpdateChannelNamesNode());
+    setAiChatStatus('');
+    if (elements.aiChatFiles) {
+      elements.aiChatFiles.value = '';
+      updateAiChatFilesLabel();
+    }
+    return;
+  }
   if (normalized === 'error ch' || normalized === 'error channel' || normalized === 'error channels') {
     elements.aiChatInput.value = '';
     appendAiChatMessage('user', prompt);
@@ -18996,39 +19012,6 @@ async function sendAiChatMessage() {
       if (elements.aiChatSend) elements.aiChatSend.disabled = false;
       setAiChatStatus('');
     }
-    return;
-  }
-  if (
-    normalized === 'update channel names' ||
-    normalized === 'update channel names sdt' ||
-    normalized === 'update names'
-  ) {
-    elements.aiChatInput.value = '';
-    appendAiChatMessage('user', prompt);
-    setAiChatStatus('');
-    if (elements.aiChatFiles) {
-      elements.aiChatFiles.value = '';
-      updateAiChatFilesLabel();
-    }
-    const node = createEl('div');
-    node.appendChild(createEl('div', '', 'Update channel names from SDT (service name).'));
-    node.appendChild(createEl(
-      'div',
-      'form-note',
-      'Это batch-операция, поэтому вынесена в CLI инструмент. По умолчанию он работает в dry-run и ограничивает нагрузку (parallel=2, timeout=10s, rate=30/min).'
-    ));
-    const code = createEl('pre', 'ai-chat-cli');
-    code.textContent =
-      'python3 tools/update_stream_names_from_sdt.py \\\\\n' +
-      '  --api http://127.0.0.1:9060 \\\\\n' +
-      '  --astral-bin /home/hex/astra/astral \\\\\n' +
-      '  --match \"a01|Bridge\" \\\\\n' +
-      '  --dry-run\n\n' +
-      '# Apply:\n' +
-      'python3 tools/update_stream_names_from_sdt.py --api http://127.0.0.1:9060 --astral-bin /home/hex/astra/astral --apply';
-    node.appendChild(code);
-    node.appendChild(createEl('div', 'form-note', 'Фильтры: `--id <id>` (повторяемый), `--match <regex>`, `--only-enabled/--all`.'));
-    appendAiChatMessage('assistant', node);
     return;
   }
   const attachments = await collectAiChatAttachments();
