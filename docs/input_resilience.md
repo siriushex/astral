@@ -26,6 +26,14 @@ When profiles are enabled (globally or per-input), Astral uses:
 
 Per-input URL options always override the profile defaults.
 
+## Adaptive auto-tune (optional)
+For unstable sources you can enable adaptive tuning:
+```
+http://host:port/stream.ts#net_profile=bad&net_auto=1
+```
+This gradually increases timeouts and relaxes low-speed limits after repeated errors,
+then slowly returns to normal when the input is stable again.
+
 ## Global defaults (Settings -> General -> Inputs)
 There are two layers:
 1) **Input Resilience (profiles)**: `settings.input_resilience.*` (new)
