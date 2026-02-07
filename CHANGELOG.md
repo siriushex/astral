@@ -12,6 +12,14 @@
 ## Entries
 ### 2026-02-07
 - Changes:
+  - Softcam: validate cam/cam_backup references in stream inputs (missing/disabled/incomplete softcams return clear errors).
+  - UI: validate softcam references on stream save and show test results even when softcam test returns errors with stats.
+  - Config: enable SQLite WAL + busy timeout to reduce `database is locked` aborts.
+  - UI: bump asset version stamp to `20260207d` to ensure browsers pick up the latest Softcam UI updates.
+- Tests:
+  - Not run (softcam validation + sqlite pragmas + UI updates).
+### 2026-02-07
+- Changes:
   - UI: add common Ladder publish controls for HLS/DASH (enable + variants) and keep full publish JSON under an Advanced fold.
 - Tests:
   - `contrib/ci/smoke.sh`
