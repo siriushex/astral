@@ -333,7 +333,7 @@ async def main_async() -> int:
     parser.add_argument("--token", default="", help="API token (Bearer). If empty, will login.")
     parser.add_argument("--username", default=os.getenv("ASTRAL_USER", "admin"), help="Login username (default: admin)")
     parser.add_argument("--password", default=os.getenv("ASTRAL_PASS", "admin"), help="Login password (default: admin)")
-    parser.add_argument("--astral-bin", default="", help="Path to astral binary (default: ./astral or astral)")
+    parser.add_argument("--astral-bin", "--astra-bin", dest="astral_bin", default="", help="Path to astral binary (default: ./astral or astral)")
     parser.add_argument("--timeout-sec", type=int, default=10, help="Per-input analyze timeout in seconds (default: 10)")
     parser.add_argument("--parallel", type=int, default=2, help="Max concurrent streams (default: 2)")
     parser.add_argument("--rate-per-min", type=int, default=30, help="Max streams per minute (default: 30)")
@@ -342,7 +342,15 @@ async def main_async() -> int:
     parser.add_argument("--id", dest="ids", action="append", default=[], help="Stream id to process (repeatable)")
     parser.add_argument("--match", default="", help="Regex to match streams by id or name")
     parser.add_argument("--force", action="store_true", help="Update even if current name looks human")
+    parser.add_argument("--dry-run", action="store_true", help="Dry-run (default). No writes.")
     parser.add_argument("--apply", action="store_true", help="Apply changes (default: dry-run)")
+    parser.add_argument(
+        "--backup",
+        nargs="?",
+        const="auto",
+        default="",
+        help="Export full config to JSON before apply. Optional path; if omitted, uses timestamped file.",
+    )
     parser.add_argument("--max-streams", type=int, default=0, help="Optional limit on processed streams (0 = no limit)")
     parser.add_argument("--mock-analyze-file", default="", help="Use static analyze output from file (testing)")
 
@@ -355,7 +363,9 @@ async def main_async() -> int:
     default_bin = str(repo_root / "astral") if (repo_root / "astral").exists() else "astral"
     astral_bin = args.astral_bin.strip() or default_bin
 
-    dry_run = not bool(args.apply)
+    if args.apply and args.dry_run:
+        raise RuntimeError("invalid flags: use either --apply or --dry-run (default)")
+    dry_run = (not bool(args.apply))
     only_enabled = bool(args.only_enabled) and not bool(args.all)
 
     rx = compile_match(args.match.strip() or None)
@@ -371,6 +381,16 @@ async def main_async() -> int:
     token = args.token.strip() or None
     if token is None:
         token = await asyncio.to_thread(login, api_base, args.username, args.password)
+
+    if args.backup and not dry_run:
+        backup_value = str(args.backup).strip()
+        if backup_value == "auto":
+            ts = time.strftime("%Y%m%d-%H%M%S")
+            backup_value = f"astral-export-{ts}.json"
+        backup_path = Path(backup_value)
+        exported = await asyncio.to_thread(http_json, "GET", f"{base_v1}/export", token, None)
+        backup_path.write_text(json.dumps(exported, ensure_ascii=False, indent=2), encoding="utf-8")
+        eprint(f"Backup written: {backup_path}")
 
     streams = await asyncio.to_thread(http_json, "GET", f"{base_v1}/streams", token, None)
     if not isinstance(streams, list):
