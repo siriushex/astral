@@ -2593,6 +2593,7 @@
   - Phase 3 ladder publish: publish metrics for HTTP-TS and HLS; UI shows metrics and experimental publish labels.
   - Audio fix stability: AAC mode now forces transcode; /stream defaults to sync=1.
   - TR-101290-lite: PCR jitter + PCR missing signals and buffer fullness thresholds in transcode watchdog.
+  - Ladder encode: encoder presets and optional GPU filter paths (NVENC/VAAPI).
 - Tests:
   - `contrib/ci/smoke_transcode_ladder_http_ts_pull.sh`
   - `contrib/ci/smoke_transcode_ladder_hls_publish.sh`
