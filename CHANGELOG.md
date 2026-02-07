@@ -2580,3 +2580,12 @@
   - `contrib/ci/smoke_mpts_spts_only.sh`
   - `contrib/ci/smoke_mpts_auto_probe.sh`
   - `contrib/ci/smoke_mpts_multisection.sh`
+### 2026-02-07
+- Changes:
+  - Phase 3 ladder publish: publish metrics for HTTP-TS and HLS; UI shows metrics and experimental publish labels.
+  - Audio fix stability: AAC mode now forces transcode; /stream defaults to sync=1.
+- Tests:
+  - `contrib/ci/smoke_transcode_ladder_http_ts_pull.sh`
+  - `contrib/ci/smoke_transcode_ladder_hls_publish.sh`
+  - `contrib/ci/smoke_transcode_ladder_dash_publish.sh`
+  - `contrib/ci/smoke_transcode_ladder_udp_publish.sh`
