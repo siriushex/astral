@@ -361,7 +361,7 @@ async def main_async() -> int:
     rx = compile_match(args.match.strip() or None)
     ids = [x.strip() for x in (args.ids or []) if x and x.strip()]
     limiter = RateLimiter(args.rate_per_min)
-    sem = asyncio.Semaphore(max(1, int(args.parallel)))
+    parallel = max(1, int(args.parallel))
 
     mock_text = None
     if args.mock_analyze_file:
@@ -430,49 +430,64 @@ async def main_async() -> int:
                 if preferred_sid is not None:
                     break
 
-        async with sem:
-            await limiter.acquire()
-            new_name = None
-            used_url = None
-            for u in inputs:
-                res = await run_analyze_for_url(
-                    astral_bin=astral_bin,
-                    input_url=u,
-                    timeout_sec=int(args.timeout_sec),
-                    preferred_sid=preferred_sid,
-                    mock_text=mock_text,
-                )
-                if res.error:
-                    continue
-                if res.service_name:
-                    new_name = res.service_name
-                    used_url = u
-                    break
+        await limiter.acquire()
+        new_name = None
+        used_url = None
+        for u in inputs:
+            res = await run_analyze_for_url(
+                astral_bin=astral_bin,
+                input_url=u,
+                timeout_sec=int(args.timeout_sec),
+                preferred_sid=preferred_sid,
+                mock_text=mock_text,
+            )
+            if res.error:
+                continue
+            if res.service_name:
+                new_name = res.service_name
+                used_url = u
+                break
 
-            if not new_name:
-                failed += 1
-                return
+        if not new_name:
+            failed += 1
+            return
 
-            if new_name.strip() == old_name.strip():
-                skipped += 1
-                return
+        if new_name.strip() == old_name.strip():
+            skipped += 1
+            return
 
-            msg = f"{stream_id}: {old_name or '(empty)'} -> {new_name} (via {used_url})"
-            print(msg)
+        msg = f"{stream_id}: {old_name or '(empty)'} -> {new_name} (via {used_url})"
+        print(msg)
 
-            if dry_run:
-                updated += 1
-                return
-
-            next_cfg = dict(cfg)
-            next_cfg["id"] = stream_id
-            next_cfg["name"] = new_name
-            payload = {"enabled": bool(enabled), "config": next_cfg}
-            await asyncio.to_thread(http_json, "PUT", f"{base_v1}/streams/{urllib.parse.quote(stream_id)}", token, payload)
+        if dry_run:
             updated += 1
+            return
 
-    tasks = [asyncio.create_task(handle_stream(item)) for item in work]
-    await asyncio.gather(*tasks)
+        next_cfg = dict(cfg)
+        next_cfg["id"] = stream_id
+        next_cfg["name"] = new_name
+        payload = {"enabled": bool(enabled), "config": next_cfg}
+        await asyncio.to_thread(http_json, "PUT", f"{base_v1}/streams/{urllib.parse.quote(stream_id)}", token, payload)
+        updated += 1
+
+    q: asyncio.Queue[Dict[str, Any]] = asyncio.Queue()
+    for item in work:
+        q.put_nowait(item)
+
+    async def worker() -> None:
+        while True:
+            try:
+                item = q.get_nowait()
+            except asyncio.QueueEmpty:
+                return
+            try:
+                await handle_stream(item)
+            finally:
+                q.task_done()
+
+    workers = [asyncio.create_task(worker()) for _ in range(parallel)]
+    await q.join()
+    await asyncio.gather(*workers)
 
     eprint(f"Done. updated={updated} skipped={skipped} failed={failed} (apply={not dry_run})")
     return 0
@@ -491,4 +506,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-
