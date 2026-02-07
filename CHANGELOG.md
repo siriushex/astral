@@ -2589,3 +2589,5 @@
   - `contrib/ci/smoke_transcode_ladder_hls_publish.sh`
   - `contrib/ci/smoke_transcode_ladder_dash_publish.sh`
   - `contrib/ci/smoke_transcode_ladder_udp_publish.sh`
+  - `contrib/ci/smoke_transcode_ladder_failover_hls_publish.sh`
+  - `contrib/ci/smoke_transcode_ladder_failover_hls_publish.sh`
