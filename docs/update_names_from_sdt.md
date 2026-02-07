@@ -1,28 +1,27 @@
-# Update Stream Names From SDT (Service Name)
+# Update Stream Names From SDT (service_name)
 
-This repo includes a low-impact CLI tool that can refresh `stream.name` by probing each stream input with `astral --analyze` and extracting the SDT service name.
+This tool updates `stream.config.name` using the SDT service name discovered via `astral --analyze`.
 
-Tool:
-- `tools/update_stream_names_from_sdt.py`
+Goals:
+- Safe by default: dry-run unless `--apply` is provided.
+- Low load: small default parallelism, per-input timeouts, and a stream rate limit.
+- Best-effort parsing: supports multiple analyze output variants.
 
 ## What It Does
-- Fetches streams from the running Astral API.
-- For each stream, checks inputs in priority order.
-- Runs `astral --analyze` with a short timeout.
-- Extracts SDT service name (UTF-8 supported).
-- Updates `stream.name` (only if a new name is found).
-
-## Safety Defaults (Minimal Load)
-- Dry-run by default (no writes).
-- Low parallelism by default (`--parallel 2`).
-- Per-input timeout (`--timeout-sec 10`).
-- Rate limit (`--rate-per-min 30`) to avoid spikes.
-- Stops `--analyze` as soon as a name is found for a stream.
+For each selected stream:
+1. Reads `config.input[]` in priority order.
+2. Runs `astral --analyze` on each input until it finds SDT `service_name`.
+3. Chooses the name:
+   - If `pnr`/`set_pnr` is present (or `#pnr=` in input URL fragment), prefers the matching SID.
+   - Otherwise uses the first SDT service name seen.
+4. Updates `stream.config.name` via `PUT /api/v1/streams/<id>` (full config payload).
 
 ## Requirements
-- Astral server running and reachable via API.
-- Credentials or token with permission to update streams.
-- `astral` binary available to run `--analyze` (or provide `--astral-bin`).
+- Python 3
+- Access to Astral API (`/api/v1`) as an admin user (default: `admin/admin`)
+- Local `astral` binary available:
+  - defaults to `./astral` (repo root) or `astral` from `PATH`
+  - override with `--astral-bin` (alias: `--astra-bin`)
 
 ## Examples
 
@@ -31,41 +30,54 @@ Dry-run (default):
 python3 tools/update_stream_names_from_sdt.py --api http://127.0.0.1:9060
 ```
 
-Dry-run with strict limits:
+Apply changes (writes names) with a config backup export:
 ```bash
 python3 tools/update_stream_names_from_sdt.py \
   --api http://127.0.0.1:9060 \
-  --parallel 2 \
-  --timeout-sec 10 \
-  --rate-per-min 30
+  --backup \
+  --apply
 ```
 
-Apply changes:
+Apply with a custom backup file path:
 ```bash
-python3 tools/update_stream_names_from_sdt.py --api http://127.0.0.1:9060 --apply
+python3 tools/update_stream_names_from_sdt.py \
+  --api http://127.0.0.1:9060 \
+  --backup /tmp/astral-export.json \
+  --apply
 ```
 
-Only streams matching a regex (id or name):
+Only streams matching regex by id or name:
 ```bash
-python3 tools/update_stream_names_from_sdt.py --api http://127.0.0.1:9060 --match "(ntv|viasat)"
+python3 tools/update_stream_names_from_sdt.py \
+  --api http://127.0.0.1:9060 \
+  --match "(ntv|viasat|bridge)"
 ```
 
-Force update even if current name already looks human:
+Target explicit stream ids (repeatable):
 ```bash
-python3 tools/update_stream_names_from_sdt.py --api http://127.0.0.1:9060 --apply --force
+python3 tools/update_stream_names_from_sdt.py \
+  --api http://127.0.0.1:9060 \
+  --id a019 --id Megahit
 ```
 
-Use explicit token:
+Force update even if current name looks human:
 ```bash
-python3 tools/update_stream_names_from_sdt.py --api http://127.0.0.1:9060 --token "$TOKEN"
+python3 tools/update_stream_names_from_sdt.py --api http://127.0.0.1:9060 --force --apply
 ```
 
-Parser test without real `--analyze`:
+## Resource Limits (Important)
+Defaults are tuned for low load:
+- `--parallel 2` (max concurrent streams)
+- `--timeout-sec 10` (per input)
+- `--rate-per-min 30` (streams per minute)
+
+If you have a large config, keep `--parallel` small.
+
+## Testing / Parser Debug
+You can test parsing without a live stream by providing static analyzer output:
 ```bash
-python3 tools/update_stream_names_from_sdt.py --api http://127.0.0.1:9060 --mock-analyze-file ./fixtures/analyze_sample.txt
+python3 tools/update_stream_names_from_sdt.py \
+  --api http://127.0.0.1:9060 \
+  --mock-analyze-file /path/to/analyze_output.txt
 ```
-
-## Notes
-- For MPTS outputs, `--analyze` may print multiple SDT services. The tool tries to prefer the stream `pnr`/`set_pnr` or the first `#pnr=` in inputs (when present).
-- If a stream has no working inputs (within timeout), it is skipped and counted as `failed`.
 
