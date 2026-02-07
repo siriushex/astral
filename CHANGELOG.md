@@ -12,6 +12,12 @@
 ## Entries
 ### 2026-02-07
 - Changes:
+  - Inputs: fix HLS segment retry scheduling scope (avoid nil `hls_schedule_segment_retry` crash on segment HTTP errors).
+  - Tools: `tools/tests/input_resilience_smoke.sh` now authenticates via `/api/v1/auth/login` before querying `/api/v1/stream-status`.
+- Tests:
+  - `tools/tests/input_resilience_smoke.sh`
+### 2026-02-07
+- Changes:
   - Inputs: add network resilience defaults (connect/read/stall/backoff/low-speed) and per-input overrides for HTTP-TS/HLS.
   - Inputs: add `settings.input_resilience` profiles (dc/wan/bad) with per-input `#net_profile` and status fields (configured/effective profile + enabled).
   - Inputs: improve HTTP/HLS `health_reason` strings for `http_request` errors (code=0 now includes the error message instead of `http_0`).
