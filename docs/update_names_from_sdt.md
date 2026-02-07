@@ -22,7 +22,7 @@ Tool:
 ## Requirements
 - Astral server running and reachable via API.
 - Credentials or token with permission to update streams.
-- `astral` binary available to run `--analyze` (or provide `--astral-bin`).
+- `astral` binary available to run `--analyze` (or provide `--astral-bin` / `--astra-bin`).
 
 ## Examples
 
@@ -43,6 +43,11 @@ python3 tools/update_stream_names_from_sdt.py \
 Apply changes:
 ```bash
 python3 tools/update_stream_names_from_sdt.py --api http://127.0.0.1:9060 --apply
+```
+
+Apply changes with backup export:
+```bash
+python3 tools/update_stream_names_from_sdt.py --api http://127.0.0.1:9060 --apply --backup
 ```
 
 Only streams matching a regex (id or name):
@@ -68,4 +73,3 @@ python3 tools/update_stream_names_from_sdt.py --api http://127.0.0.1:9060 --mock
 ## Notes
 - For MPTS outputs, `--analyze` may print multiple SDT services. The tool tries to prefer the stream `pnr`/`set_pnr` or the first `#pnr=` in inputs (when present).
 - If a stream has no working inputs (within timeout), it is skipped and counted as `failed`.
-
