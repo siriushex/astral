@@ -16,6 +16,7 @@
   - Tools: add `tools/update_stream_names_from_sdt.py` (dry-run by default, low parallelism + rate limiting) to update `stream.name` from SDT service name through API.
   - UI: fix AI chat Diff/Apply preview gating: when diff sections are empty, do not show Diff preview or Apply plan (prevents confusing `+0 ~0 -0` blocks).
   - Softcam: add `POST /api/v1/softcam/test` and a Softcam modal "Test" button (separate from Save; saving does not depend on reachability).
+  - API: remove a duplicate `/api/v1/softcam/test` route block (no behavior change).
   - UI: show a clearer allowlist/origin hint for Softcam save/test network errors.
   - UI: bump asset version stamp to `20260207a` to ensure browsers pick up the latest Softcam UI updates.
   - Runtime: skip invalid Softcam entries during apply to avoid aborting the server on incomplete configs.
