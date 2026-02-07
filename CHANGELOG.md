@@ -13,6 +13,8 @@
 ### 2026-02-07
 - Changes:
   - Softcam: add dual-CAM hedge delay (backup ECM after threshold), input-level cam_backup selection, and richer CAM stats (backup usage + RTT histogram).
+  - Softcam: fix hedged dual-CAM stats fields and implement backup send timer to match UI stats (build/runtime).
+  - HTTP input: apply /play-style sync/timeout defaults for /stream URLs (burst delivery).
   - Analyze: show dual-CAM hedge, backup activity share, and ECM RTT distribution with primary/backup counts.
   - AI Chat: add chip/command `update channel names` (no OpenAI call) with CLI instructions to refresh stream names from SDT via `astral --analyze`.
   - Tools: add `tools/update_stream_names_from_sdt.py` (dry-run by default, low parallelism + rate limiting) to update `stream.name` from SDT service name through API.
